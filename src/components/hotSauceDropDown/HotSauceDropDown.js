@@ -6,7 +6,7 @@ import { colors } from "../../utils/colors";
 const HotSauceDropDown = ({ selectedHotSauceNum, onRoundsChange }) => {
 
 
-  console.log("selectedHotSauceNum", selectedHotSauceNum);
+
 
   return (
     <View style={styles.container}>

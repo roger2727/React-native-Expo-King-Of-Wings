@@ -13,13 +13,13 @@ import { colors } from "../../utils/colors";
 import { AddPlayerButton } from "./AddPlayerButton";
 import deletePlayer from "../../../assets/cancel.png";
 
-export const AddPlayer = () => {
+export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
   const [text, setText] = useState("");
-  const [players, setPlayers] = useState([]);
+
 
   const handleAddPlayer = () => {
     if (text.trim()) {
-      setPlayers([...players, text.trim()]);
+      onAddPlayer(text.trim());
       setText("");
     } else {
       Alert.alert("Invalid Input", "Please enter a player's name.");
@@ -27,7 +27,7 @@ export const AddPlayer = () => {
   };
 
   const handleDeletePlayer = (indexToDelete) => {
-    setPlayers(players.filter((_, index) => index !== indexToDelete));
+    onDeletePlayer(indexToDelete);
   };
   const customTheme = {
     colors: {

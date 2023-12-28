@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import Input from "../addPlayer/AddPlayer";
+import AddPlayer from "../addPlayer/AddPlayer";
 import { colors } from "../../utils/colors";
 import RoundDropDown from "../roundDropDown/RoundDropDown";
 import { PlayButton } from "../playButton/PlayButton";
@@ -12,8 +12,19 @@ import { useNavigation } from "@react-navigation/native";
 const GameSetup = () => {
   const navigation = useNavigation();
   const [selectedHotSauceNum, setSelectedHotSauceNum] = useState('1');
-
+  const [players, setPlayers] = useState([]);
   
+  const handleAddPlayer = (newPlayer) => {
+    if (newPlayer.trim()) {
+      setPlayers([...players, newPlayer.trim()]);
+    } else {
+      Alert.alert("Invalid Input", "Please enter a player's name.");
+    }
+  };
+  
+  const handleDeletePlayer = (indexToDelete) => {
+    setPlayers(players.filter((_, index) => index !== indexToDelete));
+  };
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -35,11 +46,12 @@ const GameSetup = () => {
       />
       </View>
       <View style={styles.InputContainer}>
-        <Input />
+      <AddPlayer players={players} onAddPlayer={handleAddPlayer} onDeletePlayer={handleDeletePlayer} />
+
       </View>
       <View style={styles.PlayButtonContainer}>
       <PlayButton 
-          onPress={() => navigation.navigate("Game", { selectedHotSauceNum })}
+          onPress={() => navigation.navigate("Game", { selectedHotSauceNum, players })}
           width={100} 
           height={50} 
           title="PLAY" 

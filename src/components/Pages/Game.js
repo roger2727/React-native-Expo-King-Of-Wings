@@ -1,4 +1,4 @@
-import {React,  }  from 'react'
+import {React, useState }  from 'react'
 import { View, Text, StyleSheet, TouchableOpacity,Image, } from 'react-native'
 import { colors } from '../../utils/colors'
 import { HelpLogoWithModal } from '../helpLogoWithModal/HelpLogoWithModal'
@@ -8,11 +8,22 @@ import { useNavigation } from '@react-navigation/native'
 import AnimatedHotSauce from '../animatedHotSauce/AnimatedHotSauce'
 const Game = ({ route }) => {
     const navigation = useNavigation()
-    const { selectedHotSauceNum } = route.params; 
+    const { selectedHotSauceNum, players } = route.params; 
+    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(null);
 
+console.log(players)
+const handleStartButtonClick = () => {
+    if (currentPlayerIndex === null) {
+     
+        setCurrentPlayerIndex(0);
+    } else {
+       
+        setCurrentPlayerIndex((prevIndex) =>
+            prevIndex === players.length - 1 ? 0 : prevIndex + 1
+        );
+    }
+};
 
-
-console.log(selectedHotSauceNum)
   return (
     <View style={styles.container}>
     <View style={styles.nav}>
@@ -27,9 +38,15 @@ console.log(selectedHotSauceNum)
       <HelpLogoWithModal modalContent={<GameSetupContents />} />
 
     </View>
-    <Text style={styles.playerName} >player 1</Text>
+    {currentPlayerIndex !== null && (
+                <Text style={styles.playerName}>{players[currentPlayerIndex]}</Text>
+            )}
+            {currentPlayerIndex == null && (
+                <Text style={styles.playerName}>Click Start to begin</Text>
+            )}
 
-    <AnimatedHotSauce selectedHotSauceNum={selectedHotSauceNum} />
+
+    <AnimatedHotSauce selectedHotSauceNum={selectedHotSauceNum} onStartButtonClick={handleStartButtonClick}  />
 
         </View>
   )

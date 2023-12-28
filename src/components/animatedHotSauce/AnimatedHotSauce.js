@@ -4,7 +4,7 @@ import hotSauce from '../../../assets/sauce.png';
 import { colors } from '../../utils/colors';
 import { PlayButton } from '../playButton/PlayButton';
 
-const AnimatedHotSauce = ({ selectedHotSauceNum }) => {
+const AnimatedHotSauce = ({ selectedHotSauceNum, onStartButtonClick }) => {
     const [randomNumber, setRandomNumber] = useState(null);
     const shakeAnimation = useRef(new Animated.Value(0)).current; // Ref for shake animation
 
@@ -12,7 +12,7 @@ const AnimatedHotSauce = ({ selectedHotSauceNum }) => {
         // Generate a random number
         const num = Math.floor(Math.random() * selectedHotSauceNum) + 1;
         setRandomNumber(num);
-
+        onStartButtonClick();
         // Start the shake animation
         Animated.sequence([
             // sequence of animation steps
