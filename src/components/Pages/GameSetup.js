@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Input from "../addPlayer/AddPlayer";
 import { colors } from "../../utils/colors";
@@ -11,6 +11,9 @@ import homeLogo from "../../../assets/home.png";
 import { useNavigation } from "@react-navigation/native";
 const GameSetup = () => {
   const navigation = useNavigation();
+  const [selectedHotSauceNum, setSelectedHotSauceNum] = useState('1');
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -26,14 +29,21 @@ const GameSetup = () => {
       </View>
       <View style={styles.DropDownsContainer}>
         <RoundDropDown />
-        <HotSauceDropDown />
+        <HotSauceDropDown
+        selectedHotSauceNum={selectedHotSauceNum}
+        onRoundsChange={setSelectedHotSauceNum}
+      />
       </View>
       <View style={styles.InputContainer}>
         <Input />
       </View>
-
       <View style={styles.PlayButtonContainer}>
-        <PlayButton width={100} height={50} title="PLAY " />
+      <PlayButton 
+          onPress={() => navigation.navigate("Game", { selectedHotSauceNum })}
+          width={100} 
+          height={50} 
+          title="PLAY" 
+        />
       </View>
     </View>
   );

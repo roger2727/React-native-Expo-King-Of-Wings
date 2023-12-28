@@ -3,16 +3,18 @@ import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { colors } from "../../utils/colors";
 
-const HotSauceDropDown = () => {
-  const [selectedRounds, setSelectedRounds] = useState("1");
+const HotSauceDropDown = ({ selectedHotSauceNum, onRoundsChange }) => {
+
+
+  console.log("selectedHotSauceNum", selectedHotSauceNum);
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Hot Sauces</Text>
       <Picker
-        selectedValue={selectedRounds}
+        selectedValue={selectedHotSauceNum}
         style={styles.picker}
-        onValueChange={(itemValue, itemIndex) => setSelectedRounds(itemValue)}
+        onValueChange={(itemValue, itemIndex) => onRoundsChange(itemValue)}
       >
         <Picker.Item style={styles.singlePicker} label="1" value="1" />
         <Picker.Item style={styles.singlePicker} label="2" value="2" />
