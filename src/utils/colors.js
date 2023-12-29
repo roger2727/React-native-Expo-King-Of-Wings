@@ -3,4 +3,6 @@ export const colors = {
   accent: "#fc913a",
   white: "#fff",
   black: "#000",
+  lightGray: "#f5f5f5",
+  red: "#ff0000",
 };
