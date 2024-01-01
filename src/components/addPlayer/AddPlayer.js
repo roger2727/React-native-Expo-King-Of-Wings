@@ -16,7 +16,6 @@ import deletePlayer from "../../../assets/cancel.png";
 export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
   const [text, setText] = useState("");
 
-
   const handleAddPlayer = () => {
     if (text.trim()) {
       onAddPlayer(text.trim());
@@ -57,7 +56,7 @@ export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
         {players.map((player, index) => (
           <View key={index} style={styles.playerContainer}>
             <Text style={styles.player}>
-              {index + 1}. {player}
+              {index + 1}. {player.toUpperCase()}
             </Text>
             <TouchableOpacity
               source={deletePlayer}
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     flex: 1,
     marginRight: 10,
-    backgroundColor: colors.white,
+    backgroundColor: "#FAEBD7",
     borderRadius: 5,
   },
   inputContainer: {
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
   playerList: {
     alignSelf: "center",
     padding: 20,
-
+    backgroundColor: "#FAEBD7",
     width: "90%",
     height: 300,
     maxHeight: 300,
@@ -113,11 +112,9 @@ const styles = StyleSheet.create({
   },
   player: {
     fontSize: 18,
-    color: colors.white,
+    color: colors.black,
     fontWeight: "bold",
-    textShadowColor: "rgba(255, 255, 255, 0.8)",
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 40,
+
     letterSpacing: 1,
   },
   deleteButton: {

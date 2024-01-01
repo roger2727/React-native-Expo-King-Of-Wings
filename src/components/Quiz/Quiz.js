@@ -1,20 +1,18 @@
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { colors } from '../../utils/colors';
-import hotSauceQuizData from './QuizData';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { colors } from "../../utils/colors";
+import hotSauceQuizData from "./QuizData";
 
 const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [timer, setTimer] = useState(20);
-  const [score, setScore] = useState(0);
 
   useEffect(() => {
     let interval;
     if (!isAnswered) {
       interval = setInterval(() => {
-        setTimer(prevTimer => {
+        setTimer((prevTimer) => {
           if (prevTimer === 0) {
             clearInterval(interval);
             setIsAnswered(true);
@@ -59,7 +57,11 @@ const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
               key={index}
               style={[
                 styles.option,
-                isAnswered && option === selectedAnswer && (option === currentQuestion.correctAnswer ? styles.correctOption : styles.wrongOption)
+                isAnswered &&
+                  option === selectedAnswer &&
+                  (option === currentQuestion.correctAnswer
+                    ? styles.correctOption
+                    : styles.wrongOption),
               ]}
               onPress={() => handleOptionPress(option)}
               disabled={isAnswered}
@@ -69,67 +71,68 @@ const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
             </TouchableOpacity>
           ))}
         </View>
-      </View>
-      <View style={styles.timerScoreContainer}>
-        <Text style={styles.timer}>Timer: {timer}</Text>
-
+        <View style={styles.timerScoreContainer}>
+          <Text style={styles.timer}>Timer: {timer}</Text>
+        </View>
       </View>
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
-    
     width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     gap: 20,
-    
   },
   quizContainer: {
     width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-  ,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   question: {
     color: colors.white,
     marginBottom: 20,
     fontSize: 20,
+    textAlign: "center",
   },
   optionsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    width: '100%'
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    width: "100%",
   },
   option: {
-    backgroundColor: colors.white,
-    padding: 10,
+    justifyContent: "center",
+    backgroundColor: "#FAEBD7",
+    padding: 5,
+    verticalAlign: "center",
     borderRadius: 5,
-    width: '45%', // Adjust for margin/padding as needed
-    marginBottom: 10
+    width: "48%",
+    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    height: 60,
   },
   selectedOption: {
     backgroundColor: colors.primary,
   },
   optionText: {
     color: colors.black,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 16
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   nextButton: {
     backgroundColor: colors.primary,
     marginTop: 20,
     padding: 10,
-    borderRadius: 5
+    borderRadius: 5,
   },
   overlay: {
-    position: 'absolute',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black
+    position: "absolute",
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent black
     top: 0,
     bottom: 0,
     left: 0,
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 5, // Match the border radius of the option buttons
   },
   correctOption: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   wrongOption: {
     backgroundColor: colors.red,
@@ -146,19 +149,16 @@ const styles = StyleSheet.create({
   timer: {
     color: colors.white,
     fontSize: 20,
-    marginBottom: 20,
-    borderWidth: 1,
+
     borderColor: colors.primary,
-    padding: 10,
-    borderRadius: 10,
   },
   timerScoreContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%'
+    flexDirection: "row",
+    justifyContent: "flex-end", // Aligns content to the right
+    alignItems: "center", // Centers content vertically in the container
+    width: "100%",
+    // Adds padding around the container
   },
-
-
 });
 
 export default Quiz;

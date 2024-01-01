@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import AddPlayer from "../addPlayer/AddPlayer";
 import { colors } from "../../utils/colors";
@@ -11,11 +11,11 @@ import homeLogo from "../../../assets/home.png";
 import { useNavigation } from "@react-navigation/native";
 const GameSetup = () => {
   const navigation = useNavigation();
-  const [selectedHotSauceNum, setSelectedHotSauceNum] = useState('1');
+  const [selectedHotSauceNum, setSelectedHotSauceNum] = useState("1");
   const [selectedRounds, setSelectedRounds] = useState("1");
-  
+
   const [players, setPlayers] = useState([]);
-  
+
   const handleAddPlayer = (newPlayer) => {
     if (newPlayer.trim()) {
       setPlayers([...players, newPlayer.trim()]);
@@ -23,7 +23,7 @@ const GameSetup = () => {
       Alert.alert("Invalid Input", "Please enter a player's name.");
     }
   };
-  
+
   const handleDeletePlayer = (indexToDelete) => {
     setPlayers(players.filter((_, index) => index !== indexToDelete));
   };
@@ -42,23 +42,33 @@ const GameSetup = () => {
       </View>
       <View style={styles.DropDownsContainer}>
         <RoundDropDown
-        selectedRounds={selectedRounds}
-        onRoundsChange={setSelectedRounds} />
+          selectedRounds={selectedRounds}
+          onRoundsChange={setSelectedRounds}
+        />
         <HotSauceDropDown
-        selectedHotSauceNum={selectedHotSauceNum}
-        onRoundsChange={setSelectedHotSauceNum}
-      />
+          selectedHotSauceNum={selectedHotSauceNum}
+          onRoundsChange={setSelectedHotSauceNum}
+        />
       </View>
       <View style={styles.InputContainer}>
-      <AddPlayer players={players} onAddPlayer={handleAddPlayer} onDeletePlayer={handleDeletePlayer} />
-
+        <AddPlayer
+          players={players}
+          onAddPlayer={handleAddPlayer}
+          onDeletePlayer={handleDeletePlayer}
+        />
       </View>
       <View style={styles.PlayButtonContainer}>
-      <PlayButton 
-          onPress={() => navigation.navigate("Game", { selectedHotSauceNum, players, selectedRounds })}
-          width={100} 
-          height={50} 
-          title="PLAY" 
+        <PlayButton
+          onPress={() =>
+            navigation.navigate("Game", {
+              selectedHotSauceNum,
+              players,
+              selectedRounds,
+            })
+          }
+          width={100}
+          height={50}
+          title="PLAY"
         />
       </View>
     </View>

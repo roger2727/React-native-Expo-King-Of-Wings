@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
+    backgroundColor: colors.black,
     alignContent: "center",
     justifyContent: "center",
     paddingBottom: 100,
 
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    backgroundColor: colors.black,
   },
   logo: {
     alignItems: "center",

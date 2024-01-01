@@ -10,7 +10,7 @@ import {
 import leaderBoardLogo from "../../../assets/leaderboard.png";
 import { colors } from "../../utils/colors";
 
-export function LeaderBoardModal() {
+export function LeaderBoardModal({ scores, players }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -21,7 +21,10 @@ export function LeaderBoardModal() {
 
   return (
     <View>
-      <TouchableOpacity style={styles.leaderBoardLogoContainer} onPress={openModal}>
+      <TouchableOpacity
+        style={styles.leaderBoardLogoContainer}
+        onPress={openModal}
+      >
         <Image style={styles.leaderBoardLogo} source={leaderBoardLogo} />
       </TouchableOpacity>
 
@@ -34,6 +37,12 @@ export function LeaderBoardModal() {
         <View style={styles.overlay}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Leaderboard</Text>
+            {players.map((players, index) => (
+              <View key={index} style={styles.scoreEntry}>
+                <Text style={styles.playerName}>{players}</Text>
+                <Text style={styles.playerScore}>{scores[index]}</Text>
+              </View>
+            ))}
             <TouchableOpacity style={styles.button} onPress={closeModal}>
               <Text>Got it!</Text>
             </TouchableOpacity>
@@ -45,7 +54,7 @@ export function LeaderBoardModal() {
 }
 
 const styles = StyleSheet.create({
-    leaderBoardLogoContainer: {
+  leaderBoardLogoContainer: {
     display: "flex",
     height: 50,
     flexDirection: "row",
@@ -71,6 +80,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: "80%",
   },
   modalText: {
     marginBottom: 15,
@@ -96,5 +106,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+  },
+  scoreEntry: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "50%",
+    padding: 5,
+  },
+  playerName: {
+    fontSize: 16,
+    color: colors.primary,
+  },
+  playerScore: {
+    fontSize: 16,
+    color: "black",
   },
 });

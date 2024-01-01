@@ -3,14 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { colors } from "../../utils/colors";
 
-const RoundDropDown = ({selectedRounds, onRoundsChange }) => {
-
-
+const RoundDropDown = ({ selectedRounds, onRoundsChange }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Rounds:</Text>
       <Picker
-   
         selectedValue={selectedRounds}
         style={styles.picker}
         onValueChange={(itemValue, itemIndex) => onRoundsChange(itemValue)}
@@ -30,10 +27,9 @@ const styles = StyleSheet.create({
     width: 175,
 
     padding: 10,
-    backgroundColor: colors.white,
+    backgroundColor: "#FAEBD7",
     borderRadius: 10,
     zIndex: 10,
-
   },
   label: {
     fontSize: 18,
@@ -41,13 +37,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   picker: {
-
     zIndex: 20,
   },
   singlePicker: {
- 
     fontSize: 18,
-
   },
 });
 
