@@ -11,7 +11,7 @@ import homeLogo from "../../../assets/home.png";
 import kingLogo from "../../../assets/king.png";
 import champ from "../../../assets/champion.png";
 import { useNavigation } from "@react-navigation/native";
-import Confetti from 'react-native-confetti';
+import Confetti from "react-native-confetti";
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
   const { winners } = route.params;
@@ -27,8 +27,6 @@ const GameOver = ({ route }) => {
       confettiRef.current.startConfetti();
     }
 
-
-
     return () => {
       if (confettiRef.current) {
         confettiRef.current.stopConfetti();
@@ -38,7 +36,7 @@ const GameOver = ({ route }) => {
 
   return (
     <View style={styles.container}>
-       <Confetti zIndex={10} ref={confettiRef} />
+      <Confetti zIndex={10} ref={confettiRef} />
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -170,9 +168,8 @@ const styles = StyleSheet.create({
     marginTop: 20, // Adjust as needed
   },
   confetti: {
- zIndex: 10,
-
-  }
+    zIndex: 10,
+  },
 });
 
 export default GameOver;

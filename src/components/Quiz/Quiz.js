@@ -3,7 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import hotSauceQuizData from "./QuizData";
 
-const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
+const Quiz = ({
+  currentQuestionIndex,
+  advanceQuestion,
+  updatePlayerScore,
+  setIsTimerRunning,
+  triggerHotSauceAnimation,
+}) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [timer, setTimer] = useState(20);
@@ -16,7 +22,7 @@ const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
           if (prevTimer === 0) {
             clearInterval(interval);
             setIsAnswered(true);
-
+            setIsTimerRunning(false); // Stop the timer and update state in parent component
             return 0;
           }
           return prevTimer - 1;
@@ -38,14 +44,23 @@ const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
     if (!isAnswered) {
       setSelectedAnswer(option);
       setIsAnswered(true);
+      setIsTimerRunning(false); // Stop the timer
+      triggerHotSauceAnimation(); // Trigger the animation
+      // Set the timer running state to false when an answer is selected
       if (option === hotSauceQuizData[currentQuestionIndex].correctAnswer) {
-        const additionalScore = timer; // Calculate score based on timer or any other logic
-        updatePlayerScore(additionalScore); // Update the player's score
+        const additionalScore = timer;
+        updatePlayerScore(additionalScore);
       }
     }
   };
 
   const currentQuestion = hotSauceQuizData[currentQuestionIndex];
+
+  useEffect(() => {
+    if (timer === 0 || isAnswered) {
+      triggerHotSauceAnimation();
+    }
+  }, [timer, isAnswered]);
 
   return (
     <View style={styles.container}>
@@ -98,9 +113,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   optionsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+  
+   
     width: "100%",
   },
   option: {
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
     padding: 5,
     verticalAlign: "center",
     borderRadius: 5,
-    width: "48%",
+    width: "100%",
     marginBottom: 10,
     borderWidth: 2,
     borderColor: colors.primary,

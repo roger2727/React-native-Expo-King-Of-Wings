@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState,  useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { colors } from "../../utils/colors";
 import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
@@ -18,8 +18,18 @@ const Game = ({ route }) => {
   const [roundCount, setRoundCount] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState(players.map(() => 0));
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [animateHotSauce, setAnimateHotSauce] = useState(false);
   
+  const triggerHotSauceAnimation = () => {
+    setAnimateHotSauce(true);
+  };
 
+  useEffect(() => {
+    if (animateHotSauce) {
+      setAnimateHotSauce(false);
+    }
+  }, [animateHotSauce]);
   const updateScore = (additionalScore) => {
     setScores((prevScores) => {
       const newScores = [...prevScores];
@@ -29,6 +39,8 @@ const Game = ({ route }) => {
   };
 
   const handleStartButtonClick = () => {
+    setIsTimerRunning(true);
+
     const nextPlayerIndex =
       currentPlayerIndex === null
         ? 0
@@ -97,11 +109,13 @@ const Game = ({ route }) => {
         </View>
       )}
 
-      {currentPlayerIndex !== null && (
+      {isTimerRunning && (
         <Quiz
           currentQuestionIndex={currentQuestionIndex}
           advanceQuestion={advanceQuestionInQuiz}
           updatePlayerScore={updateScore}
+          setIsTimerRunning={setIsTimerRunning} // Pass the function to change the timer state
+          triggerHotSauceAnimation={triggerHotSauceAnimation}
         />
       )}
 
@@ -109,12 +123,31 @@ const Game = ({ route }) => {
         <Text style={styles.playerName}>Click Start to begin</Text>
       )}
 
-      <AnimatedHotSauce
-        selectedHotSauceNum={selectedHotSauceNum}
-        onStartButtonClick={handleStartButtonClick}
-        onNextQuestion={advanceQuestionInQuiz}
-      />
-
+      {!isTimerRunning && (
+        <AnimatedHotSauce
+      
+          selectedHotSauceNum={selectedHotSauceNum}
+          onStartButtonClick={handleStartButtonClick}
+          onNextQuestion={advanceQuestionInQuiz}
+          triggerAnimation={animateHotSauce}
+        />
+      )}
+      {currentPlayerIndex == null && (
+        <PlayButton
+          style={styles.button}
+          size={100}
+          title="START"
+          onPress={handleStartButtonClick} // Use the same function for starting the game
+        />
+      )}
+      {currentPlayerIndex != null && (
+        <PlayButton
+          style={styles.button}
+          size={100}
+          title="NEXT PLAYER"
+          onPress={handleStartButtonClick} // Use the same function for starting the game
+        />
+      )}
     </View>
   );
 };
@@ -149,17 +182,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5, // Maintain vertical padding
   },
 
-  playerName: {
-    color: colors.white,
-    fontSize: 30,
-    fontWeight: "bold",
-
-    alignSelf: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    alignContent: "center",
-  },
-
   button: {
     alignSelf: "center",
     justifyContent: "center",
@@ -169,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     width: "100%",
-    height: 60,
+    height: 70,
     position: "relative",
   },
   playerNameContainer: {

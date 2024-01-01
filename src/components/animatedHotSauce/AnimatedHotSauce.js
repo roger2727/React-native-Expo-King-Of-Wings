@@ -1,22 +1,34 @@
-import { React, useState, useRef } from "react";
+import {
+  React,
+  useState,
+  useRef,
+
+
+  useEffect,
+} from "react";
 import { View, Text, Image, Animated, StyleSheet } from "react-native";
 import hotSauce from "../../../assets/sauce.png";
 import { colors } from "../../utils/colors";
-import { PlayButton } from "../playButton/PlayButton";
-import Quiz from "../Quiz/Quiz";
+
 const AnimatedHotSauce = ({
   selectedHotSauceNum,
-  onStartButtonClick,
   onNextQuestion,
+  triggerAnimation,
 }) => {
   const [randomNumber, setRandomNumber] = useState(null);
-  const shakeAnimation = useRef(new Animated.Value(0)).current; // Ref for shake animation
+  const shakeAnimation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (triggerAnimation) {
+      handlePress();
+    }
+  }, [triggerAnimation]);
 
   const handlePress = () => {
     // Generate a random number
     const num = Math.floor(Math.random() * selectedHotSauceNum) + 1;
     setRandomNumber(num);
-    onStartButtonClick();
+
     // Start the shake animation
     Animated.sequence([
       // sequence of animation steps
@@ -41,9 +53,16 @@ const AnimatedHotSauce = ({
         useNativeDriver: true,
       }),
     ]).start();
-
     onNextQuestion();
   };
+
+
+
+  useEffect(() => {
+    if (triggerAnimation) {
+      handlePress();
+    }
+  }, [triggerAnimation]);
   return (
     <View style={styles.container}>
       <View style={styles.main}>
@@ -59,13 +78,6 @@ const AnimatedHotSauce = ({
           )}
         </Animated.View>
       </View>
-
-      <PlayButton
-        style={styles.button}
-        size={100}
-        title="START"
-        onPress={handlePress}
-      />
     </View>
   );
 };
@@ -96,7 +108,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
-
   },
   score: {
     color: colors.white,

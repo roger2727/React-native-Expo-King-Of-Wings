@@ -58,7 +58,7 @@ const GameSetup = () => {
         />
       </View>
       <View style={styles.PlayButtonContainer}>
-      <PlayButton
+        <PlayButton
           onPress={() =>
             navigation.navigate("Game", {
               selectedHotSauceNum,
