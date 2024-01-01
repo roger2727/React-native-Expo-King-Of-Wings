@@ -31,43 +31,70 @@ const Game = ({ route }) => {
     }
   }, [animateHotSauce]);
   const updateScore = (additionalScore) => {
+    if (isNaN(additionalScore)) {
+      console.error('Invalid score update:', additionalScore);
+      return; // Do not update scores if the input is invalid
+    }
     setScores((prevScores) => {
       const newScores = [...prevScores];
-      newScores[currentPlayerIndex] += additionalScore;
+      const currentScore = newScores[currentPlayerIndex] || 0; // Fallback to 0 if undefined
+      newScores[currentPlayerIndex] = currentScore + additionalScore;
       return newScores;
     });
   };
 
   const handleStartButtonClick = () => {
+    console.log('Start button clicked. Current Player Index:', currentPlayerIndex);
+  
     setIsTimerRunning(true);
-
-    const nextPlayerIndex =
-      currentPlayerIndex === null
-        ? 0
-        : currentPlayerIndex === players.length - 1
-          ? 0
-          : currentPlayerIndex + 1;
-
-    setCurrentPlayerIndex(nextPlayerIndex);
+  
+    let nextPlayerIndex = currentPlayerIndex + 1;
+  
+    // Check if it's the first player and the game is starting
+    if (currentPlayerIndex === null) {
+      nextPlayerIndex = 0;
+      console.log('Starting the game. Setting first player.');
+    }
+  
+    console.log(`Next player index before adjustment: ${nextPlayerIndex}`);
+  
+    // Advance to the next question if it's not the first button press
     if (currentPlayerIndex !== null) {
       advanceQuestionInQuiz();
     }
-
-    if (nextPlayerIndex === 0 && roundCount === selectedRounds - 1) {
-      // Find the top three scores
-      const sortedScores = [...scores].sort((a, b) => b - a);
-      const uniqueScores = [...new Set(sortedScores)];
-      const topThreeScores = uniqueScores.slice(0, 3);
-
-      const winners = topThreeScores.map((score) => {
-        return players[scores.indexOf(score)];
-      });
-
-      navigation.navigate("Game Over", { winners });
-    } else if (currentPlayerIndex === players.length - 1) {
-      setRoundCount((prevRoundCount) => prevRoundCount + 1);
+  
+    // Check if it's the last player's turn
+    if (nextPlayerIndex >= players.length) {
+      nextPlayerIndex = 0; // Reset to the first player for the next round
+      const newRoundCount = roundCount + 1;
+      setRoundCount(newRoundCount);
+      console.log(`Round completed. New round count: ${newRoundCount}`);
+  
+      console.log(`Selected Rounds: ${selectedRounds}, New Round Count: ${newRoundCount}`);
+      // Check if the game should end
+      if (newRoundCount >= selectedRounds) {
+        console.log('End of the selected rounds. Navigating to Game Over screen.');
+        // Game over logic
+        const sortedScores = [...scores].sort((a, b) => b - a);
+        const uniqueScores = [...new Set(sortedScores)];
+        const topThreeScores = uniqueScores.slice(0, 3);
+  
+        const winners = topThreeScores.map((score) => {
+          return players[scores.indexOf(score)];
+        });
+  
+        navigation.navigate("Game Over", { winners });
+        return; // Exit the function to prevent further processing
+      }
     }
+  
+    console.log(`Setting next player index for the next turn: ${nextPlayerIndex}`);
+    // Set the next player index for the next turn
+    setCurrentPlayerIndex(nextPlayerIndex);
   };
+  
+  
+  
   const advanceQuestionInQuiz = () => {
     setCurrentQuestionIndex((prevIndex) => {
       // Assuming you have the total number of questions

@@ -36,7 +36,7 @@ const GameOver = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Confetti zIndex={10} ref={confettiRef} />
+      <Confetti confettiCount={200} size={1.5} zIndex={10} ref={confettiRef} />
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -167,9 +167,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20, // Adjust as needed
   },
-  confetti: {
-    zIndex: 10,
-  },
+
 });
 
 export default GameOver;
