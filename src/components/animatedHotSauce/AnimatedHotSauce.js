@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
+
   },
   score: {
     color: colors.white,

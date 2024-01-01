@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useRef, useEffect } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 
 import { colors } from "../../utils/colors";
@@ -11,6 +11,7 @@ import homeLogo from "../../../assets/home.png";
 import kingLogo from "../../../assets/king.png";
 import champ from "../../../assets/champion.png";
 import { useNavigation } from "@react-navigation/native";
+import Confetti from 'react-native-confetti';
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
   const { winners } = route.params;
@@ -18,8 +19,26 @@ const GameOver = ({ route }) => {
   const secondPlace = winners.length > 1 ? winners[1] : "N/A";
   const thirdPlace = winners.length > 2 ? winners[2] : "N/A";
   console.log(winners);
+
+  const confettiRef = useRef();
+
+  useEffect(() => {
+    if (confettiRef.current) {
+      confettiRef.current.startConfetti();
+    }
+
+
+
+    return () => {
+      if (confettiRef.current) {
+        confettiRef.current.stopConfetti();
+      }
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
+       <Confetti zIndex={10} ref={confettiRef} />
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -150,6 +169,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20, // Adjust as needed
   },
+  confetti: {
+ zIndex: 10,
+
+  }
 });
 
 export default GameOver;

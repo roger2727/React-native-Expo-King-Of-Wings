@@ -10,6 +10,7 @@ import hotSauceQuizData from "../Quiz/QuizData";
 
 import AnimatedHotSauce from "../animatedHotSauce/AnimatedHotSauce";
 import { LeaderBoardModal } from "../leaderBoardModal/LeaderBoardModal";
+import { PlayButton } from "../playButton/PlayButton";
 const Game = ({ route }) => {
   const navigation = useNavigation();
   const { selectedHotSauceNum, players, selectedRounds } = route.params;
@@ -17,6 +18,7 @@ const Game = ({ route }) => {
   const [roundCount, setRoundCount] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState(players.map(() => 0));
+  
 
   const updateScore = (additionalScore) => {
     setScores((prevScores) => {
@@ -112,6 +114,7 @@ const Game = ({ route }) => {
         onStartButtonClick={handleStartButtonClick}
         onNextQuestion={advanceQuestionInQuiz}
       />
+
     </View>
   );
 };

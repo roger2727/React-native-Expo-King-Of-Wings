@@ -58,7 +58,7 @@ const GameSetup = () => {
         />
       </View>
       <View style={styles.PlayButtonContainer}>
-        <PlayButton
+      <PlayButton
           onPress={() =>
             navigation.navigate("Game", {
               selectedHotSauceNum,
@@ -69,6 +69,7 @@ const GameSetup = () => {
           width={100}
           height={50}
           title="PLAY"
+          disabled={players.length === 0} // Disable the button if no players
         />
       </View>
     </View>

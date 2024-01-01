@@ -16,7 +16,7 @@ const Quiz = ({ currentQuestionIndex, advanceQuestion, updatePlayerScore }) => {
           if (prevTimer === 0) {
             clearInterval(interval);
             setIsAnswered(true);
-            // advanceQuestion(); // Advance to the next question when the timer runs out
+
             return 0;
           }
           return prevTimer - 1;

@@ -6,14 +6,22 @@ export const PlayButton = ({
   style = {},
   textStyle = {},
   size = 125,
+  disabled = false,
+  title,
+  onPress,
   ...props
 }) => {
   return (
     <TouchableOpacity
-      style={[styles(size).radius, style]}
-      onPress={props.onPress}
+      style={[
+        styles(size).radius,
+        { opacity: disabled ? 0.2 : 1 }, 
+        style
+      ]}
+      onPress={!disabled ? onPress : null} 
+      {...props}
     >
-      <Text style={[styles(size).text, textStyle]}>{props.title}</Text>
+      <Text style={[styles(size).text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
