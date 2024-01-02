@@ -8,18 +8,19 @@ export default GameSetupContents = () => {
       <Text style={styles.modalText}>
         Welcome to King of Wings! Here's how to set your game up:
       </Text>
+   
       <Text style={styles.modalText}>
-        1. Add the players to the player list by typing in the name and press
+        1. select how may rounds you want to play .
+      </Text>
+      <Text style={styles.modalText}>
+        2. select how many hot sauces you are playing with.
+      </Text>
+      <Text style={styles.modalText}>
+        3. Add the players to the player list by typing in the name and press
         the + button.
       </Text>
       <Text style={styles.modalText}>
-        2. select how may rounds you want to play .
-      </Text>
-      <Text style={styles.modalText}>
-        3. select how many hot sauces you are playing with.
-      </Text>
-      <Text style={styles.modalText}>
-        5. click play and let the game begin.
+        4. click play and let the game begin.
       </Text>
     </View>
   );

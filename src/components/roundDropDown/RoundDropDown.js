@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { colors } from "../../utils/colors";
+
 
 const RoundDropDown = ({ selectedRounds, onRoundsChange }) => {
   return (
@@ -17,6 +17,11 @@ const RoundDropDown = ({ selectedRounds, onRoundsChange }) => {
         <Picker.Item style={styles.singlePicker} label="3" value="3" />
         <Picker.Item style={styles.singlePicker} label="4" value="4" />
         <Picker.Item style={styles.singlePicker} label="5" value="5" />
+        <Picker.Item style={styles.singlePicker} label="6" value="6" />
+        <Picker.Item style={styles.singlePicker} label="7" value="7" />
+        <Picker.Item style={styles.singlePicker} label="8" value="8" />
+        <Picker.Item style={styles.singlePicker} label="9" value="9" />
+        <Picker.Item style={styles.singlePicker} label="10" value="10" />
       </Picker>
     </View>
   );

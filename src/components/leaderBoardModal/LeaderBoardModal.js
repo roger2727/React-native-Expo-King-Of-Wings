@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  View,
-  Text,
-} from "react-native";
+import { Image, TouchableOpacity, StyleSheet, Modal, View, Text } from "react-native";
 import leaderBoardLogo from "../../../assets/leaderboard.png";
 import { colors } from "../../utils/colors";
 
@@ -17,14 +10,17 @@ export function LeaderBoardModal({ scores, players }) {
     console.log("Opening modal");
     setModalVisible(true);
   };
+
   const closeModal = () => setModalVisible(false);
+
+  // Create an array of player-score pairs, sort it, and then map it
+  const sortedPlayers = players
+    .map((player, index) => ({ name: player, score: scores[index] }))
+    .sort((a, b) => b.score - a.score);
 
   return (
     <View>
-      <TouchableOpacity
-        style={styles.leaderBoardLogoContainer}
-        onPress={openModal}
-      >
+      <TouchableOpacity style={styles.leaderBoardLogoContainer} onPress={openModal}>
         <Image style={styles.leaderBoardLogo} source={leaderBoardLogo} />
       </TouchableOpacity>
 
@@ -36,11 +32,11 @@ export function LeaderBoardModal({ scores, players }) {
       >
         <View style={styles.overlay}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Leaderboard</Text>
-            {players.map((players, index) => (
+            <Text style={styles.modalTitle}>Leader board</Text>
+            {sortedPlayers.map((player, index) => (
               <View key={index} style={styles.scoreEntry}>
-                <Text style={styles.playerName}>{players}</Text>
-                <Text style={styles.playerScore}>{scores[index]}</Text>
+                <Text style={styles.playerName}>{`${index + 1}. ${player.name}`}</Text>
+                <Text style={styles.playerScore}>{player.score}</Text>
               </View>
             ))}
             <TouchableOpacity style={styles.button} onPress={closeModal}>
@@ -95,6 +91,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     backgroundColor: colors.accent,
+    marginTop: 20,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

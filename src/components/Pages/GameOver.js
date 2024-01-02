@@ -8,17 +8,17 @@ import { PlayButton } from "../playButton/PlayButton";
 import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
 import GameOverContents from "../helpLogoWithModal/modalContents/GameSetupContents";
 import homeLogo from "../../../assets/home.png";
-import kingLogo from "../../../assets/king.png";
+import kingLogo from "../../../assets/crown.png";
 import champ from "../../../assets/champion.png";
 import { useNavigation } from "@react-navigation/native";
 import Confetti from "react-native-confetti";
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
   const { winners } = route.params;
-  const firstPlace = winners[0] || "N/A";
-  const secondPlace = winners.length > 1 ? winners[1] : "N/A";
-  const thirdPlace = winners.length > 2 ? winners[2] : "N/A";
-  console.log(winners);
+  const firstPlace = winners[0] || "";
+  const secondPlace = winners.length > 1 ? winners[1] : "";
+  const thirdPlace = winners.length > 2 ? winners[2] : "";
+console.log('winners', winners);
 
   const confettiRef = useRef();
 
@@ -36,7 +36,7 @@ const GameOver = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Confetti confettiCount={200} size={1.5} zIndex={10} ref={confettiRef} />
+      <Confetti  zIndex={10} ref={confettiRef} />
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -104,8 +104,9 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   KingImage: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
+zIndex: 10,
     resizeMode: "contain",
     alignSelf: "center",
   },
@@ -141,7 +142,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingLeft: 20, // Adjust as needed
     color: colors.white, // Color for visibility
-    fontSize: 16,
+    fontSize: 18,
+    paddingTop: 10,
   },
   thirdPlaceText: {
     // ... existing styles for thirdPlaceText ...
@@ -149,7 +151,8 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 20, // Adjust as needed
     color: colors.white, // Color for visibility
-    fontSize: 16,
+    fontSize: 18,
+    paddingTop: 10,
   },
   winnersContainers: {
     justifyContent: "center",
@@ -157,9 +160,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 100,
     flexDirection: "column",
-    width: "95%",
+    width: "80%",
     backgroundColor: colors.black,
-    marginTop: -30, // Adjust this value as needed to move closer to the champ image
+    marginTop: -40,
+    marginBottom:-60, // Adjust this value as needed to move closer to the champ image
   },
   secondThirdContainer: {
     flexDirection: "row",

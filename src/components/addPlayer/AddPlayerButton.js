@@ -6,14 +6,19 @@ export const AddPlayerButton = ({
   style = {},
   textStyle = {},
   size = 125,
+  disabled = false,
+  onPress,
+  title,
+
   ...props
 }) => {
   return (
     <TouchableOpacity
-      style={[styles(size).radius, style]}
-      onPress={props.onPress}
+      style={[styles(size).radius, { opacity: disabled ? 0.2 : 1 }, style]}
+      onPress={!disabled ? onPress : null}
+      {...props}
     >
-      <Text style={[styles(size).text, textStyle]}>{props.title}</Text>
+      <Text  style={[styles(size).text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -25,9 +30,11 @@ const styles = (size) => ({
     height: size,
     alignItems: "center",
     justifyContent: "center",
+    textAlign: "center",
     borderColor: colors.white,
     borderWidth: 4,
     backgroundColor: colors.primary,
+   
   },
-  text: { color: colors.white, fontSize: size / 2 },
+  text: { color: colors.white, fontSize: size / 2 ,},
 });

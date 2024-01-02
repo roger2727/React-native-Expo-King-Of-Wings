@@ -65,7 +65,9 @@ const AnimatedHotSauce = ({
   }, [triggerAnimation]);
   return (
     <View style={styles.container}>
+        
       <View style={styles.main}>
+
         <Animated.View
           style={[
             styles.hotSauceContainer,
@@ -93,15 +95,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   hotSauceImage: {
-    width: 260,
-    height: 230,
+    width: 400,
+   
     resizeMode: "contain",
     alignSelf: "center",
   },
   randomNumber: {
     position: "absolute",
     color: colors.black,
-    fontSize: 40,
+    fontSize: 60,
     alignSelf: "center",
     top: "56%",
     fontWeight: "bold",

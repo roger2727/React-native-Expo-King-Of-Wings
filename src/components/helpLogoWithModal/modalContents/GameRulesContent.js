@@ -3,31 +3,19 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default GameRulesContent = () => {
   return (
-    <View>
-      <Text style={styles.modalTitle}>King of Wings Game Rules</Text>
-      <Text style={styles.modalText}>
-        Welcome to King of Wings! Here's how to play:
-      </Text>
-      <Text style={styles.modalText}>
-        1. Players take turns rolling a random number in the app.
-      </Text>
-      <Text style={styles.modalText}>
-        2. Each number corresponds to a specific hot sauce level and a drinking
-        challenge.
-      </Text>
-      <Text style={styles.modalText}>
-        3. If you roll a 2, for example, you must take Hot Sauce Level 2 and
-        complete the challenge
-      </Text>
-      <Text style={styles.modalText}>
-        5. At the end of the game, the app will calculate the scores and
-        announce the player with the lowest total as the King of Wings!
-      </Text>
-      <Text style={styles.modalText}>
-        Remember: Drink responsibly and ensure everyone is comfortable with the
-        game's challenges. Have fun!
-      </Text>
-    </View>
+<View>
+  <Text  style={styles.modalTitle}>King of Wings Game Rules</Text>
+  <Text style={styles.modalText}>
+    Welcome to King of Wings! Setup your hot sauces from mild to hot, add players, and decide on the number of rounds.
+  </Text>
+  <Text style={styles.modalText}>
+    Gameplay: Players take turns rolling a number, answering a question for points, and eating a wing with the sauce matching their roll. Keep going until all rounds are complete.
+  </Text>
+  <Text style={styles.modalText}>
+    Scoring is based on answer speed. The player with the highest score at the end is crowned the King of Wings!
+  </Text>
+</View>
+
   );
 };
 
@@ -36,6 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    alignSelf: "center",
   },
   modalText: {
     marginBottom: 15,

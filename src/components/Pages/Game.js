@@ -48,18 +48,17 @@ const Game = ({ route }) => {
   
     setIsTimerRunning(true);
   
-    let nextPlayerIndex = currentPlayerIndex + 1;
-  
-    // Check if it's the first player and the game is starting
+    let nextPlayerIndex;
+
+    // Check if it's the start of the game
     if (currentPlayerIndex === null) {
-      nextPlayerIndex = 0;
-      console.log('Starting the game. Setting first player.');
-    }
-  
-    console.log(`Next player index before adjustment: ${nextPlayerIndex}`);
-  
-    // Advance to the next question if it's not the first button press
-    if (currentPlayerIndex !== null) {
+      nextPlayerIndex = Math.floor(Math.random() * players.length);
+      console.log('Starting the game. Randomly selected first player index:', nextPlayerIndex);
+    } else {
+      // Logic for subsequent players
+      nextPlayerIndex = currentPlayerIndex + 1;
+
+      // Advance to the next question if it's not the first button press
       advanceQuestionInQuiz();
     }
   
@@ -103,7 +102,7 @@ const Game = ({ route }) => {
     });
   };
 
-  console.log("scores", scores);
+console.log('scores', scores);  
 
   return (
     <View style={styles.container}>
@@ -146,11 +145,12 @@ const Game = ({ route }) => {
         />
       )}
 
-      {currentPlayerIndex == null && (
-        <Text style={styles.playerName}>Click Start to begin</Text>
-      )}
+    
 
-      {!isTimerRunning && (
+      {!isTimerRunning &&  currentPlayerIndex != null &&  (
+      <View style={styles.msgContainer}>
+           <Text style={styles.msg}></Text>
+      <Text style={styles.msg}>Your random hot sauce number is</Text>
         <AnimatedHotSauce
       
           selectedHotSauceNum={selectedHotSauceNum}
@@ -158,23 +158,35 @@ const Game = ({ route }) => {
           onNextQuestion={advanceQuestionInQuiz}
           triggerAnimation={animateHotSauce}
         />
+   
+   </View>
       )}
       {currentPlayerIndex == null && (
+            <View style={styles.gameStartContainer}>
+                <Text style={styles.msg}>GET READY</Text>
+              <Text style={styles.msg}>Player 1 will be randomly chosen</Text>
+            <Text style={styles.playerName}>Click Start To Begin</Text>
         <PlayButton
           style={styles.button}
-          size={100}
+          size={120}
           title="START"
-          onPress={handleStartButtonClick} // Use the same function for starting the game
+          onPress={handleStartButtonClick}
+      // Use the same function for starting the game
         />
+          </View>
       )}
-      {currentPlayerIndex != null && (
-        <PlayButton
-          style={styles.button}
-          size={100}
-          title="NEXT PLAYER"
-          onPress={handleStartButtonClick} // Use the same function for starting the game
-        />
-      )}
+    {currentPlayerIndex != null && (
+  
+    <PlayButton
+      style={styles.button}
+      size={120}
+      title="NEXT PLAYER"
+      onPress={handleStartButtonClick}
+      disabled={isTimerRunning} 
+     // Disable button when quiz is active
+    />
+  
+)}
     </View>
   );
 };
@@ -243,6 +255,25 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 20,
   },
+  msgContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  msg: {
+    color: colors.white,
+    fontSize: 20,
+  },
+  gameStartContainer: {
+    flex: 1,
+    gap: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    
+  },
+
 });
 
 export default Game;
