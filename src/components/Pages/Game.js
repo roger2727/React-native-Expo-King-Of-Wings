@@ -3,14 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { colors } from "../../utils/colors";
 import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
 import homeLogo from "../../../assets/home.png";
-
 import { useNavigation } from "@react-navigation/native";
 import Quiz from "../Quiz/Quiz";
 import hotSauceQuizData from "../Quiz/QuizData";
-
 import AnimatedHotSauce from "../animatedHotSauce/AnimatedHotSauce";
 import { LeaderBoardModal } from "../leaderBoardModal/LeaderBoardModal";
 import { PlayButton } from "../playButton/PlayButton";
+import InGameRules from "../helpLogoWithModal/modalContents/InGameRules";
+
+
 const Game = ({ route }) => {
   const navigation = useNavigation();
   const { selectedHotSauceNum, players, selectedRounds } = route.params;
@@ -116,7 +117,7 @@ console.log('scores', scores);
         </TouchableOpacity>
         <LeaderBoardModal scores={scores} players={players} />
 
-        <HelpLogoWithModal modalContent={<GameSetupContents />} />
+        <HelpLogoWithModal modalContent={<InGameRules />} />
       </View>
       {currentPlayerIndex !== null && (
         <View style={styles.playerInfoContainer}>
@@ -161,20 +162,21 @@ console.log('scores', scores);
    
    </View>
       )}
-      {currentPlayerIndex == null && (
-            <View style={styles.gameStartContainer}>
-                <Text style={styles.msg}>GET READY</Text>
-              <Text style={styles.msg}>Player 1 will be randomly chosen</Text>
-            <Text style={styles.playerName}>Click Start To Begin</Text>
-        <PlayButton
-          style={styles.button}
-          size={120}
-          title="START"
-          onPress={handleStartButtonClick}
-      // Use the same function for starting the game
-        />
-          </View>
-      )}
+{currentPlayerIndex == null && (
+  <View style={styles.gameStartContainer}>
+        <Text style={styles.msg}>New here? Tap the 'Help' button above for a quick guide.</Text>
+    <Text style={styles.playerName}>Get Ready!</Text>
+    <Text  style={styles.msg}>A random player will kick off the game.</Text>
+
+
+    <PlayButton
+      style={styles.button}
+      size={120}
+      title="START"
+      onPress={handleStartButtonClick}
+    />
+  </View>
+)}
     {currentPlayerIndex != null && (
   
     <PlayButton
@@ -264,6 +266,7 @@ const styles = StyleSheet.create({
   msg: {
     color: colors.white,
     fontSize: 20,
+    textAlign: "center",
   },
   gameStartContainer: {
     flex: 1,
@@ -271,6 +274,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
+    alignSelf: "center",
+    width: "95%",
     
   },
 

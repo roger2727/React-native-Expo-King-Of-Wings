@@ -1,5 +1,5 @@
-import { React, useRef, useEffect } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import { React, useRef, useEffect, useState } from "react";
+import { View, StyleSheet, Image, TouchableOpacity, Text, Animated } from "react-native";
 
 import { colors } from "../../utils/colors";
 
@@ -21,6 +21,26 @@ const GameOver = ({ route }) => {
 console.log('winners', winners);
 
   const confettiRef = useRef();
+
+
+  const [glowAnim] = useState(new Animated.Value(10));
+
+useEffect(() => {
+  Animated.loop(
+    Animated.sequence([
+      Animated.timing(glowAnim, {
+        toValue: 15,
+        duration: 500,
+        useNativeDriver: false
+      }),
+      Animated.timing(glowAnim, {
+        toValue: 10,
+        duration: 500,
+        useNativeDriver: false
+      })
+    ])
+  ).start();
+}, []);
 
   useEffect(() => {
     if (confettiRef.current) {
@@ -50,10 +70,20 @@ console.log('winners', winners);
       </View>
 
       <View style={styles.PlayButtonContainer}>
+      <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>
         <View style={styles.group}>
           <Image style={styles.KingImage} source={kingLogo} />
           <View style={styles.winnersContainers}>
-            <Text style={styles.firstPlaceText}>{firstPlace}</Text>
+          <Animated.Text
+  style={[
+    styles.firstPlaceText,
+    {
+      textShadowRadius: glowAnim, // Animated glow effect
+    }
+  ]}
+>
+  {firstPlace}
+</Animated.Text>
             <View style={styles.secondThirdContainer}>
               <Text style={styles.secondPlaceText}>{secondPlace}</Text>
               <Text style={styles.thirdPlaceText}>{thirdPlace}</Text>
@@ -126,14 +156,16 @@ zIndex: 10,
     justifyContent: "center",
   },
   firstPlaceText: {
-    color: colors.white, // Color for visibility
-    fontSize: 40,
-    fontWeight: "bold",
-    alignSelf: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    color: colors.white, // Color for visibility
+    color: '#FF8C00', // Deep orange color
+    fontSize: 50,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+    textShadowColor: 'rgba(255, 140, 0, 0.8)', // Same deep orange with transparency for glow
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
 
   secondPlaceText: {
@@ -162,7 +194,7 @@ zIndex: 10,
     flexDirection: "column",
     width: "80%",
     backgroundColor: colors.black,
-    marginTop: -40,
+    marginTop: -30,
     marginBottom:-60, // Adjust this value as needed to move closer to the champ image
   },
   secondThirdContainer: {
@@ -171,6 +203,14 @@ zIndex: 10,
     width: "100%",
     marginTop: 20, // Adjust as needed
   },
+  winnerMsg: {
+    color: colors.white, // Color for visibility
+    fontSize: 24,
+    width: "100%",
+    textAlign: "center",
+
+  },
+
 
 });
 

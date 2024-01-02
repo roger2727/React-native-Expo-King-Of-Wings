@@ -42,15 +42,24 @@ const Quiz = ({
 
   const handleOptionPress = (option) => {
     if (!isAnswered) {
-      setSelectedAnswer(option);
       setIsAnswered(true);
-      setIsTimerRunning(false); // Stop the timer
-      triggerHotSauceAnimation(); // Trigger the animation
-      // Set the timer running state to false when an answer is selected
+  
+    
+      setSelectedAnswer(option);
+      // Delay all actions after an answer is selected
       if (option === hotSauceQuizData[currentQuestionIndex].correctAnswer) {
         const additionalScore = timer;
         updatePlayerScore(additionalScore);
       }
+      setTimeout(() => {
+        setIsTimerRunning(false); 
+       // Stop the timer
+        triggerHotSauceAnimation(); // Trigger the animation
+  
+       
+  
+        advanceQuestion(); // Move to the next question
+      }, 2500); // 2-second delay
     }
   };
 
@@ -62,6 +71,8 @@ const Quiz = ({
     }
   }, [timer, isAnswered]);
 
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.quizContainer}>
@@ -72,11 +83,8 @@ const Quiz = ({
               key={index}
               style={[
                 styles.option,
-                isAnswered &&
-                  option === selectedAnswer &&
-                  (option === currentQuestion.correctAnswer
-                    ? styles.correctOption
-                    : styles.wrongOption),
+                isAnswered && option === selectedAnswer && option !== currentQuestion.correctAnswer && styles.wrongOption,
+                isAnswered && option === currentQuestion.correctAnswer && styles.correctOption,
               ]}
               onPress={() => handleOptionPress(option)}
               disabled={isAnswered}
@@ -146,18 +154,20 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent black
+    backgroundColor: "rgba(0, 0, 0, 0.2)", 
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    borderRadius: 5, // Match the border radius of the option buttons
+    borderRadius: 5, 
   },
   correctOption: {
     backgroundColor: "green",
+    borderWidth:0
   },
   wrongOption: {
     backgroundColor: colors.red,
+    borderWidth:0
   },
 
   timer: {
