@@ -52,10 +52,7 @@ const Game = ({ route }) => {
   };
 
   const handleStartButtonClick = () => {
-    console.log(
-      "Start button clicked. Current Player Index:",
-      currentPlayerIndex,
-    );
+
 
     setIsTimerRunning(true);
 
@@ -64,10 +61,7 @@ const Game = ({ route }) => {
     // Check if it's the start of the game
     if (currentPlayerIndex === null) {
       nextPlayerIndex = Math.floor(Math.random() * players.length);
-      console.log(
-        "Starting the game. Randomly selected first player index:",
-        nextPlayerIndex,
-      );
+     
     } else {
       // Logic for subsequent players
       nextPlayerIndex = currentPlayerIndex + 1;
@@ -81,13 +75,11 @@ const Game = ({ route }) => {
       nextPlayerIndex = 0; // Reset to the first player for the next round
       const newRoundCount = roundCount + 1;
       setRoundCount(newRoundCount);
-      console.log(`Round completed. New round count: ${newRoundCount}`);
+
 
       // Check if the game should end
       if (newRoundCount >= selectedRounds) {
-        console.log(
-          "End of the selected rounds. Navigating to Game Over screen.",
-        );
+     
 
         // Pass the entire scores and players array to the Game Over screen
         navigation.navigate("Game Over", { scores, players });
@@ -95,9 +87,7 @@ const Game = ({ route }) => {
       }
     }
 
-    console.log(
-      `Setting next player index for the next turn: ${nextPlayerIndex}`,
-    );
+  
     setCurrentPlayerIndex(nextPlayerIndex);
   };
 
@@ -109,8 +99,7 @@ const Game = ({ route }) => {
     });
   };
 
-  console.log("scores", scores);
-  console.log("players", players);
+
   return (
     <View style={styles.container}>
       <View style={styles.nav}>

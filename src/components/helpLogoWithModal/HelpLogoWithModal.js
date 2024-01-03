@@ -14,7 +14,7 @@ export function HelpLogoWithModal({ modalContent }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
-    console.log("Opening modal");
+ 
     setModalVisible(true);
   };
   const closeModal = () => setModalVisible(false);

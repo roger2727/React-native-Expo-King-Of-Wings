@@ -14,7 +14,7 @@ export function LeaderBoardModal({ scores, players }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
-    console.log("Opening modal");
+    
     setModalVisible(true);
   };
 
