@@ -37,7 +37,7 @@ const Quiz = ({
     // Reset states when the question changes
     setSelectedAnswer(null);
     setIsAnswered(false);
-    setTimer(20000); // Reset timer for the new question
+    setTimer(20); // Reset timer for the new question
   }, [currentQuestionIndex]); // Dependency array includes currentQuestionIndex
 
   const handleOptionPress = (option) => {
