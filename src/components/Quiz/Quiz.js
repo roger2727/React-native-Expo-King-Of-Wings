@@ -37,7 +37,7 @@ const Quiz = ({
     // Reset states when the question changes
     setSelectedAnswer(null);
     setIsAnswered(false);
-    setTimer(2000); // Reset timer for the new question
+    setTimer(25); // Reset timer for the new question
   }, [currentQuestionIndex]); // Dependency array includes currentQuestionIndex
 
   const handleOptionPress = (option) => {
@@ -105,9 +105,10 @@ const Quiz = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: "95%",
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",
     gap: 10,
   },
   quizContainer: {

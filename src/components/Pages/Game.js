@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     verticalAlign: "center",
+   
     backgroundColor: colors.black,
   },
 
@@ -219,11 +220,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     alignContent: "center",
+    marginBottom: 40,
   },
   playerInfoContainer: {
     alignItems: "center",
     alignSelf: "center",
-    width: "100%",
+    width: "97%",
     height: 60,
     position: "relative",
   },
