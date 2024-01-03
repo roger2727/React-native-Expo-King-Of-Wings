@@ -28,7 +28,8 @@ const GameOver = ({ route }) => {
   const confettiRef = useRef();
 
   useEffect(() => {
-    if (confettiRef.current) {
+    // Start confetti only if there is a valid winner
+    if (winner !== "No Winner" && confettiRef.current) {
       confettiRef.current.startConfetti();
     }
 
@@ -37,11 +38,12 @@ const GameOver = ({ route }) => {
         confettiRef.current.stopConfetti();
       }
     };
-  }, []);
+  }, [winner]); 
 
   return (
     <View style={styles.container}>
-      <Confetti zIndex={10} ref={confettiRef} />
+     
+     {winner !== "No Winner" && <Confetti zIndex={10} ref={confettiRef} />}
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -55,9 +57,13 @@ const GameOver = ({ route }) => {
       </View>
 
       <View style={styles.PlayButtonContainer}>
-        <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>
+      {winner !== "No Winner" && (
+        <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>)}
+         {winner == "No Winner" && (
+         <Text style={styles.winnerMsg}>Looks like the wings were too hot for everyone!</Text>)}
         <View style={styles.group}>
-          <Image style={styles.KingImage} source={kingLogo} />
+        {winner !== "No Winner" && (
+          <Image style={styles.KingImage} source={kingLogo} />)}
           <Text style={styles.firstPlaceText}>
               {winner}
               </Text>

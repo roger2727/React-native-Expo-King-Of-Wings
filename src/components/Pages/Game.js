@@ -53,15 +53,31 @@ const Game = ({ route }) => {
   const determineWinner = () => {
     let highestScore = 0;
     let winnerIndex = -1;
+    let tie = false;
+  
+    // Check if all scores are zero
+    const allZero = scores.every(score => score === 0);
+    if (allZero) {
+      // Handle the all zero case
+      return "No Winner";
+    }
   
     scores.forEach((score, index) => {
       if (score > highestScore) {
         highestScore = score;
         winnerIndex = index;
+        tie = false;
+      } else if (score === highestScore && highestScore !== 0) {
+        tie = true;
       }
     });
   
-    return winnerIndex !== -1 ? players[winnerIndex] : null;
+    if (tie) {
+      // Handle the tie case
+      return "It's a Tie!";
+    } else {
+      return winnerIndex !== -1 ? players[winnerIndex] : null;
+    }
   };
 
   const handleStartButtonClick = () => {

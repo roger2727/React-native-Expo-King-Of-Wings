@@ -13,6 +13,23 @@ const Quiz = ({
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [timer, setTimer] = useState(20);
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
+  const shuffleArray = (array) => {
+    let currentIndex = array.length, randomIndex;
+    
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  };
 
   useEffect(() => {
     let interval;
@@ -46,7 +63,7 @@ const Quiz = ({
 
       setSelectedAnswer(option);
       // Delay all actions after an answer is selected
-      if (option === hotSauceQuizData[currentQuestionIndex].correctAnswer) {
+      if (option === shuffledQuestions[currentQuestionIndex].correctAnswer) {
         const additionalScore = timer;
         updatePlayerScore(additionalScore);
       }
@@ -60,17 +77,23 @@ const Quiz = ({
     }
   };
 
-  const currentQuestion = hotSauceQuizData[currentQuestionIndex];
+
 
   useEffect(() => {
     if (timer === 0 || isAnswered) {
       triggerHotSauceAnimation();
     }
   }, [timer, isAnswered]);
+  useEffect(() => {
+    setShuffledQuestions(shuffleArray([...hotSauceQuizData]));
+  }, []);
 
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
   return (
     <View style={styles.container}>
       <View style={styles.quizContainer}>
+      {currentQuestion && (
+        <>
         <Text style={styles.question}>{currentQuestion.question}</Text>
         <View style={styles.optionsGrid}>
           {currentQuestion.options.map((option, index) => (
@@ -92,12 +115,17 @@ const Quiz = ({
               <Text style={styles.optionText}>{option}</Text>
               {isAnswered && <View style={styles.overlay}></View>}
             </TouchableOpacity>
+            
           ))}
+       
         </View>
+        
         <View style={styles.timerScoreContainer}>
           <Text style={styles.timer}>Timer: {timer}</Text>
         </View>
+        </>   )}
       </View>
+      
     </View>
   );
 };
