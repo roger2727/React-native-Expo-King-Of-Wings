@@ -18,46 +18,14 @@ import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
 import GameOverContents from "../helpLogoWithModal/modalContents/GameSetupContents";
 import homeLogo from "../../../assets/home.png";
 import kingLogo from "../../../assets/crown.png";
-import champ from "../../../assets/champion.png";
+
 import { useNavigation } from "@react-navigation/native";
 import Confetti from "react-native-confetti";
+import { LeaderBoardModal } from "../leaderBoardModal/LeaderBoardModal";
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
-  const { scores, players } = route.params;
-
-  const playersWithScores = players.map((player, index) => ({
-    name: player,
-    score: scores[index],
-  }));
-
-  // Sort the array based on scores in descending order
-  playersWithScores.sort((a, b) => b.score - a.score);
-
-  // Extract the top three players
-  const firstPlace = playersWithScores[0]?.name || "";
-  const secondPlace = playersWithScores[1]?.name || "";
-  const thirdPlace = playersWithScores[2]?.name || "";
-
+  const { winner, scores, players } = route.params;
   const confettiRef = useRef();
-
-  const [glowAnim] = useState(new Animated.Value(10));
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(glowAnim, {
-          toValue: 15,
-          duration: 500,
-          useNativeDriver: false,
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 10,
-          duration: 500,
-          useNativeDriver: false,
-        }),
-      ]),
-    ).start();
-  }, []);
 
   useEffect(() => {
     if (confettiRef.current) {
@@ -82,7 +50,7 @@ const GameOver = ({ route }) => {
         >
           <Image style={styles.logoImage} source={homeLogo} />
         </TouchableOpacity>
-
+        <LeaderBoardModal scores={scores} players={players} />
         <HelpLogoWithModal modalContent={<GameOverContents />} />
       </View>
 
@@ -90,24 +58,13 @@ const GameOver = ({ route }) => {
         <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>
         <View style={styles.group}>
           <Image style={styles.KingImage} source={kingLogo} />
-          <View style={styles.winnersContainers}>
-            <Animated.Text
-              style={[
-                styles.firstPlaceText,
-                {
-                  textShadowRadius: glowAnim, // Animated glow effect
-                },
-              ]}
-            >
-              {firstPlace}
-            </Animated.Text>
-            <View style={styles.secondThirdContainer}>
-              <Text style={styles.secondPlaceText}>{secondPlace}</Text>
-              <Text style={styles.thirdPlaceText}>{thirdPlace}</Text>
-            </View>
-          </View>
+          <Text style={styles.firstPlaceText}>
+              {winner}
+              </Text>
+          
+
         </View>
-        <Image style={styles.champImage} source={champ} />
+      
         <PlayButton
           onPress={() => navigation.navigate("Welcome")}
           width={100}
@@ -153,58 +110,30 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   KingImage: {
-    width: 150,
-    height: 150,
+    width: 300,
+
     zIndex: 10,
     resizeMode: "contain",
     alignSelf: "center",
   },
-  winnerText: {
-    color: colors.white, // Color for visibility
-    fontSize: 24,
-    width: "100%",
-  },
-  champImage: {
-    width: 300,
-    height: 250,
 
-    alignSelf: "center",
-  },
+
   group: {
+    flex: 0.8,
     alignItems: "center",
     justifyContent: "center",
   },
   firstPlaceText: {
-    color: "#FF8C00", // Deep orange color
+    color: colors.primary, // Deep orange color
     fontSize: 50,
     fontWeight: "bold",
     alignSelf: "center",
     textAlign: "center",
     justifyContent: "center",
     alignContent: "center",
-    textShadowColor: "rgba(255, 140, 0, 0.8)", // Same deep orange with transparency for glow
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
+ 
   },
-
-  secondPlaceText: {
-    // ... existing styles for secondPlaceText ...
-    flex: 1,
-    textAlign: "left",
-    paddingLeft: 20, // Adjust as needed
-    color: colors.white, // Color for visibility
-    fontSize: 18,
-    paddingTop: 10,
-  },
-  thirdPlaceText: {
-    // ... existing styles for thirdPlaceText ...
-    flex: 1,
-    textAlign: "right",
-    paddingRight: 20, // Adjust as needed
-    color: colors.white, // Color for visibility
-    fontSize: 18,
-    paddingTop: 10,
-  },
+ 
   winnersContainers: {
     justifyContent: "center",
     alignSelf: "center",
@@ -213,15 +142,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "80%",
     backgroundColor: colors.black,
-    marginTop: -20,
-    marginBottom: -60, // Adjust this value as needed to move closer to the champ image
+// Adjust this value as needed to move closer to the champ image
   },
-  secondThirdContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginTop: 20, // Adjust as needed
-  },
+ 
   winnerMsg: {
     color: colors.white, // Color for visibility
     fontSize: 24,

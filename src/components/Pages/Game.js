@@ -50,6 +50,19 @@ const Game = ({ route }) => {
       return newScores;
     });
   };
+  const determineWinner = () => {
+    let highestScore = 0;
+    let winnerIndex = -1;
+  
+    scores.forEach((score, index) => {
+      if (score > highestScore) {
+        highestScore = score;
+        winnerIndex = index;
+      }
+    });
+  
+    return winnerIndex !== -1 ? players[winnerIndex] : null;
+  };
 
   const handleStartButtonClick = () => {
 
@@ -79,10 +92,10 @@ const Game = ({ route }) => {
 
       // Check if the game should end
       if (newRoundCount >= selectedRounds) {
-     
-
-        // Pass the entire scores and players array to the Game Over screen
-        navigation.navigate("Game Over", { scores, players });
+        const winner = determineWinner();
+      
+        // Pass only the winner to the Game Over screen
+        navigation.navigate("Game Over", { winner, scores, players });
         return; // Exit the function to prevent further processing
       }
     }
