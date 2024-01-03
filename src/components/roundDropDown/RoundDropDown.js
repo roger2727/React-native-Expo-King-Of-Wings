@@ -38,7 +38,7 @@ const RoundDropDown = ({ selectedRounds, onRoundsChange }) => {
 
 const styles = StyleSheet.create({
   container: {
-  width: "100%",
+    width: "100%",
 
     padding: 10,
     backgroundColor: "#FAEBD7",
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   option: {
     padding: 10,

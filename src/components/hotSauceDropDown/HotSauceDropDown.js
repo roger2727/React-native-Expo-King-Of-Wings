@@ -9,7 +9,7 @@ const HotSauceDropDown = ({ selectedHotSauceNum, onRoundsChange }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Hot Sauces:</Text>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.dropdown}
         onPress={() => setModalVisible(true)}
       >
@@ -54,16 +54,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   dropdown: {
-
     padding: 8,
     backgroundColor: "#FAEBD7",
   },
   selectedText: {
     fontSize: 18,
-
   },
   modalView: {
-margin: 40,
+    margin: 40,
 
     backgroundColor: "white",
     borderRadius: 20,
@@ -72,11 +70,11 @@ margin: 40,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   option: {
     padding: 10,

@@ -1,5 +1,14 @@
 import { React, useRef, useEffect, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text, Animated, StatusBar,Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  Animated,
+  StatusBar,
+  Platform,
+} from "react-native";
 
 import { colors } from "../../utils/colors";
 
@@ -14,9 +23,12 @@ import { useNavigation } from "@react-navigation/native";
 import Confetti from "react-native-confetti";
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
-  const { scores, players } = route.params;  
+  const { scores, players } = route.params;
 
-  const playersWithScores = players.map((player, index) => ({ name: player, score: scores[index] }));
+  const playersWithScores = players.map((player, index) => ({
+    name: player,
+    score: scores[index],
+  }));
 
   // Sort the array based on scores in descending order
   playersWithScores.sort((a, b) => b.score - a.score);
@@ -26,28 +38,26 @@ const GameOver = ({ route }) => {
   const secondPlace = playersWithScores[1]?.name || "";
   const thirdPlace = playersWithScores[2]?.name || "";
 
-
   const confettiRef = useRef();
-
 
   const [glowAnim] = useState(new Animated.Value(10));
 
-useEffect(() => {
-  Animated.loop(
-    Animated.sequence([
-      Animated.timing(glowAnim, {
-        toValue: 15,
-        duration: 500,
-        useNativeDriver: false
-      }),
-      Animated.timing(glowAnim, {
-        toValue: 10,
-        duration: 500,
-        useNativeDriver: false
-      })
-    ])
-  ).start();
-}, []);
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(glowAnim, {
+          toValue: 15,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+        Animated.timing(glowAnim, {
+          toValue: 10,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+      ]),
+    ).start();
+  }, []);
 
   useEffect(() => {
     if (confettiRef.current) {
@@ -63,7 +73,7 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      <Confetti  zIndex={10} ref={confettiRef} />
+      <Confetti zIndex={10} ref={confettiRef} />
       <View style={styles.nav}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Welcome")}
@@ -77,20 +87,20 @@ useEffect(() => {
       </View>
 
       <View style={styles.PlayButtonContainer}>
-      <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>
+        <Text style={styles.winnerMsg}>King of Wings has be crowned</Text>
         <View style={styles.group}>
           <Image style={styles.KingImage} source={kingLogo} />
           <View style={styles.winnersContainers}>
-          <Animated.Text
-  style={[
-    styles.firstPlaceText,
-    {
-      textShadowRadius: glowAnim, // Animated glow effect
-    }
-  ]}
->
-  {firstPlace}
-</Animated.Text>
+            <Animated.Text
+              style={[
+                styles.firstPlaceText,
+                {
+                  textShadowRadius: glowAnim, // Animated glow effect
+                },
+              ]}
+            >
+              {firstPlace}
+            </Animated.Text>
             <View style={styles.secondThirdContainer}>
               <Text style={styles.secondPlaceText}>{secondPlace}</Text>
               <Text style={styles.thirdPlaceText}>{thirdPlace}</Text>
@@ -145,7 +155,7 @@ const styles = StyleSheet.create({
   KingImage: {
     width: 150,
     height: 150,
-zIndex: 10,
+    zIndex: 10,
     resizeMode: "contain",
     alignSelf: "center",
   },
@@ -165,14 +175,14 @@ zIndex: 10,
     justifyContent: "center",
   },
   firstPlaceText: {
-    color: '#FF8C00', // Deep orange color
+    color: "#FF8C00", // Deep orange color
     fontSize: 50,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
-    textShadowColor: 'rgba(255, 140, 0, 0.8)', // Same deep orange with transparency for glow
+    fontWeight: "bold",
+    alignSelf: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    textShadowColor: "rgba(255, 140, 0, 0.8)", // Same deep orange with transparency for glow
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
@@ -204,7 +214,7 @@ zIndex: 10,
     width: "80%",
     backgroundColor: colors.black,
     marginTop: -20,
-    marginBottom:-60, // Adjust this value as needed to move closer to the champ image
+    marginBottom: -60, // Adjust this value as needed to move closer to the champ image
   },
   secondThirdContainer: {
     flexDirection: "row",
@@ -217,10 +227,7 @@ zIndex: 10,
     fontSize: 24,
     width: "100%",
     textAlign: "center",
-
   },
-
-
 });
 
 export default GameOver;

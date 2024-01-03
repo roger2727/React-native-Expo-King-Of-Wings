@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Image, TouchableOpacity, StyleSheet, Modal, View, Text } from "react-native";
+import {
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  View,
+  Text,
+} from "react-native";
 import leaderBoardLogo from "../../../assets/leaderboard.png";
 import { colors } from "../../utils/colors";
 
@@ -20,7 +27,10 @@ export function LeaderBoardModal({ scores, players }) {
 
   return (
     <View>
-      <TouchableOpacity style={styles.leaderBoardLogoContainer} onPress={openModal}>
+      <TouchableOpacity
+        style={styles.leaderBoardLogoContainer}
+        onPress={openModal}
+      >
         <Image style={styles.leaderBoardLogo} source={leaderBoardLogo} />
       </TouchableOpacity>
 
@@ -35,7 +45,9 @@ export function LeaderBoardModal({ scores, players }) {
             <Text style={styles.modalTitle}>Leader board</Text>
             {sortedPlayers.map((player, index) => (
               <View key={index} style={styles.scoreEntry}>
-                <Text style={styles.playerName}>{`${index + 1}. ${player.name}`}</Text>
+                <Text style={styles.playerName}>{`${index + 1}. ${
+                  player.name
+                }`}</Text>
                 <Text style={styles.playerScore}>{player.score}</Text>
               </View>
             ))}

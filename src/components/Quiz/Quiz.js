@@ -43,8 +43,7 @@ const Quiz = ({
   const handleOptionPress = (option) => {
     if (!isAnswered) {
       setIsAnswered(true);
-  
-    
+
       setSelectedAnswer(option);
       // Delay all actions after an answer is selected
       if (option === hotSauceQuizData[currentQuestionIndex].correctAnswer) {
@@ -52,12 +51,10 @@ const Quiz = ({
         updatePlayerScore(additionalScore);
       }
       setTimeout(() => {
-        setIsTimerRunning(false); 
-       // Stop the timer
+        setIsTimerRunning(false);
+        // Stop the timer
         triggerHotSauceAnimation(); // Trigger the animation
-  
-       
-  
+
         advanceQuestion(); // Move to the next question
       }, 2500); // 2-second delay
     }
@@ -71,8 +68,6 @@ const Quiz = ({
     }
   }, [timer, isAnswered]);
 
-  
-
   return (
     <View style={styles.container}>
       <View style={styles.quizContainer}>
@@ -83,8 +78,13 @@ const Quiz = ({
               key={index}
               style={[
                 styles.option,
-                isAnswered && option === selectedAnswer && option !== currentQuestion.correctAnswer && styles.wrongOption,
-                isAnswered && option === currentQuestion.correctAnswer && styles.correctOption,
+                isAnswered &&
+                  option === selectedAnswer &&
+                  option !== currentQuestion.correctAnswer &&
+                  styles.wrongOption,
+                isAnswered &&
+                  option === currentQuestion.correctAnswer &&
+                  styles.correctOption,
               ]}
               onPress={() => handleOptionPress(option)}
               disabled={isAnswered}
@@ -121,8 +121,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   optionsGrid: {
-  
- 
     width: "100%",
   },
   option: {
@@ -154,20 +152,20 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    backgroundColor: "rgba(0, 0, 0, 0.2)", 
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    borderRadius: 5, 
+    borderRadius: 5,
   },
   correctOption: {
     backgroundColor: "green",
-    borderWidth:0
+    borderWidth: 0,
   },
   wrongOption: {
     backgroundColor: colors.red,
-    borderWidth:0
+    borderWidth: 0,
   },
 
   timer: {

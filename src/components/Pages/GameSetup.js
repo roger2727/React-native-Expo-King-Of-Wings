@@ -1,5 +1,14 @@
 import { React, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, StatusBar, Platform ,KeyboardAvoidingView, ScrollView} from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import AddPlayer from "../addPlayer/AddPlayer";
 import { colors } from "../../utils/colors";
 import RoundDropDown from "../roundDropDown/RoundDropDown";
@@ -28,11 +37,7 @@ const GameSetup = () => {
     setPlayers(players.filter((_, index) => index !== indexToDelete));
   };
   return (
-    <KeyboardAvoidingView 
-      style={{ flex: 1, backgroundColor: colors.black }} 
-    
-   
-    >
+    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: colors.black }}>
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.nav}>
@@ -42,23 +47,23 @@ const GameSetup = () => {
             >
               <Image style={styles.logoImage} source={homeLogo} />
             </TouchableOpacity>
-  
+
             <HelpLogoWithModal modalContent={<GameSetupContents />} />
           </View>
           <View style={styles.DropDownsContainer}>
-    <View style={styles.dropDownStyle}>
-      <RoundDropDown
-        selectedRounds={selectedRounds}
-        onRoundsChange={setSelectedRounds}
-      />
-    </View>
-    <View style={styles.dropDownStyle}>
-      <HotSauceDropDown
-        selectedHotSauceNum={selectedHotSauceNum}
-        onRoundsChange={setSelectedHotSauceNum}
-      />
-    </View>
-  </View>
+            <View style={styles.dropDownStyle}>
+              <RoundDropDown
+                selectedRounds={selectedRounds}
+                onRoundsChange={setSelectedRounds}
+              />
+            </View>
+            <View style={styles.dropDownStyle}>
+              <HotSauceDropDown
+                selectedHotSauceNum={selectedHotSauceNum}
+                onRoundsChange={setSelectedHotSauceNum}
+              />
+            </View>
+          </View>
           <View style={styles.InputContainer}>
             <AddPlayer
               players={players}
@@ -76,7 +81,7 @@ const GameSetup = () => {
                   selectedRounds,
                 })
               }
-            size={100}
+              size={100}
               title="PLAY"
               disabled={players.length === 0} // Disable the button if no players
             />
@@ -85,7 +90,6 @@ const GameSetup = () => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-  
 };
 
 const styles = StyleSheet.create({
@@ -95,7 +99,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexDirection: "column",
     gap: 20,
-
 
     alignContent: "center",
     justifyContent: "center",
@@ -111,9 +114,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: "#FAEBD7",
 
-
     borderColor: colors.primary,
-  
   },
   DropDownsContainer: {
     flexDirection: "row",
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nav: {
- 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
 
     width: "95%",
   },
-  
 });
 
 export default GameSetup;

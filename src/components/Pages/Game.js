@@ -1,5 +1,13 @@
-import { React, useState,  useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, StatusBar } from "react-native";
+import { React, useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { colors } from "../../utils/colors";
 import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
 import homeLogo from "../../../assets/home.png";
@@ -11,7 +19,6 @@ import { LeaderBoardModal } from "../leaderBoardModal/LeaderBoardModal";
 import { PlayButton } from "../playButton/PlayButton";
 import InGameRules from "../helpLogoWithModal/modalContents/InGameRules";
 
-
 const Game = ({ route }) => {
   const navigation = useNavigation();
   const { selectedHotSauceNum, players, selectedRounds } = route.params;
@@ -21,7 +28,7 @@ const Game = ({ route }) => {
   const [scores, setScores] = useState(players.map(() => 0));
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [animateHotSauce, setAnimateHotSauce] = useState(false);
-  
+
   const triggerHotSauceAnimation = () => {
     setAnimateHotSauce(true);
   };
@@ -33,7 +40,7 @@ const Game = ({ route }) => {
   }, [animateHotSauce]);
   const updateScore = (additionalScore) => {
     if (isNaN(additionalScore)) {
-      console.error('Invalid score update:', additionalScore);
+      console.error("Invalid score update:", additionalScore);
       return; // Do not update scores if the input is invalid
     }
     setScores((prevScores) => {
@@ -45,16 +52,22 @@ const Game = ({ route }) => {
   };
 
   const handleStartButtonClick = () => {
-    console.log('Start button clicked. Current Player Index:', currentPlayerIndex);
-  
+    console.log(
+      "Start button clicked. Current Player Index:",
+      currentPlayerIndex,
+    );
+
     setIsTimerRunning(true);
-  
+
     let nextPlayerIndex;
 
     // Check if it's the start of the game
     if (currentPlayerIndex === null) {
       nextPlayerIndex = Math.floor(Math.random() * players.length);
-      console.log('Starting the game. Randomly selected first player index:', nextPlayerIndex);
+      console.log(
+        "Starting the game. Randomly selected first player index:",
+        nextPlayerIndex,
+      );
     } else {
       // Logic for subsequent players
       nextPlayerIndex = currentPlayerIndex + 1;
@@ -62,7 +75,7 @@ const Game = ({ route }) => {
       // Advance to the next question if it's not the first button press
       advanceQuestionInQuiz();
     }
-  
+
     // Check if it's the last player's turn
     if (nextPlayerIndex >= players.length) {
       nextPlayerIndex = 0; // Reset to the first player for the next round
@@ -72,20 +85,22 @@ const Game = ({ route }) => {
 
       // Check if the game should end
       if (newRoundCount >= selectedRounds) {
-        console.log('End of the selected rounds. Navigating to Game Over screen.');
+        console.log(
+          "End of the selected rounds. Navigating to Game Over screen.",
+        );
 
         // Pass the entire scores and players array to the Game Over screen
         navigation.navigate("Game Over", { scores, players });
         return; // Exit the function to prevent further processing
       }
     }
-  
-    console.log(`Setting next player index for the next turn: ${nextPlayerIndex}`);
+
+    console.log(
+      `Setting next player index for the next turn: ${nextPlayerIndex}`,
+    );
     setCurrentPlayerIndex(nextPlayerIndex);
-};
-  
-  
-  
+  };
+
   const advanceQuestionInQuiz = () => {
     setCurrentQuestionIndex((prevIndex) => {
       // Assuming you have the total number of questions
@@ -94,8 +109,8 @@ const Game = ({ route }) => {
     });
   };
 
-console.log('scores', scores);  
-console.log('players', players);
+  console.log("scores", scores);
+  console.log("players", players);
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -137,49 +152,46 @@ console.log('players', players);
         />
       )}
 
-    
-
-      {!isTimerRunning &&  currentPlayerIndex != null &&  (
-      <View style={styles.msgContainer}>
-           <Text style={styles.msg}></Text>
-      <Text style={styles.msg}>Your random hot sauce number is</Text>
-        <AnimatedHotSauce
-      
-          selectedHotSauceNum={selectedHotSauceNum}
-          onStartButtonClick={handleStartButtonClick}
-          onNextQuestion={advanceQuestionInQuiz}
-          triggerAnimation={animateHotSauce}
-        />
-   
-   </View>
+      {!isTimerRunning && currentPlayerIndex != null && (
+        <View style={styles.msgContainer}>
+          <Text style={styles.msg}></Text>
+          <Text style={styles.msg}>Your random hot sauce number is</Text>
+          <AnimatedHotSauce
+            selectedHotSauceNum={selectedHotSauceNum}
+            onStartButtonClick={handleStartButtonClick}
+            onNextQuestion={advanceQuestionInQuiz}
+            triggerAnimation={animateHotSauce}
+          />
+        </View>
       )}
-{currentPlayerIndex == null && (
-  <View style={styles.gameStartContainer}>
-        <Text style={styles.msg}>New here? Tap the 'Question' button above for a quick guide.</Text>
-    <Text style={styles.playerName}>Get Ready!</Text>
-    <Text  style={styles.msg}>A random player will kick off the game.</Text>
+      {currentPlayerIndex == null && (
+        <View style={styles.gameStartContainer}>
+          <Text style={styles.msg}>
+            New here? Tap the 'Question' button above for a quick guide.
+          </Text>
+          <Text style={styles.playerName}>Get Ready!</Text>
+          <Text style={styles.msg}>
+            A random player will kick off the game.
+          </Text>
 
-
-    <PlayButton
-      style={styles.button}
-      size={120}
-      title="START"
-      onPress={handleStartButtonClick}
-    />
-  </View>
-)}
-    {currentPlayerIndex != null && (
-  
-    <PlayButton
-      style={styles.button}
-      size={100}
-      title="NEXT PLAYER"
-      onPress={handleStartButtonClick}
-      disabled={isTimerRunning} 
-     // Disable button when quiz is active
-    />
-  
-)}
+          <PlayButton
+            style={styles.button}
+            size={120}
+            title="START"
+            onPress={handleStartButtonClick}
+          />
+        </View>
+      )}
+      {currentPlayerIndex != null && (
+        <PlayButton
+          style={styles.button}
+          size={100}
+          title="NEXT PLAYER"
+          onPress={handleStartButtonClick}
+          disabled={isTimerRunning}
+          // Disable button when quiz is active
+        />
+      )}
     </View>
   );
 };
@@ -205,21 +217,19 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nav: {
-   
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     alignSelf: "center", // This will make the nav take full width
     width: "95%",
 
-   // Maintain vertical padding
+    // Maintain vertical padding
   },
 
   button: {
     alignSelf: "center",
     justifyContent: "center",
     alignContent: "center",
-
   },
   playerInfoContainer: {
     alignItems: "center",
@@ -227,7 +237,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     position: "relative",
-
   },
   playerNameContainer: {
     flex: 1,
@@ -270,9 +279,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignSelf: "center",
     width: "80%",
-    
   },
-
 });
 
 export default Game;

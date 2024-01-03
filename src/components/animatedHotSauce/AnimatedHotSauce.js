@@ -1,11 +1,4 @@
-import {
-  React,
-  useState,
-  useRef,
-
-
-  useEffect,
-} from "react";
+import { React, useState, useRef, useEffect } from "react";
 import { View, Text, Image, Animated, StyleSheet } from "react-native";
 import hotSauce from "../../../assets/sauce.png";
 import { colors } from "../../utils/colors";
@@ -56,8 +49,6 @@ const AnimatedHotSauce = ({
     onNextQuestion();
   };
 
-
-
   useEffect(() => {
     if (triggerAnimation) {
       handlePress();
@@ -65,9 +56,7 @@ const AnimatedHotSauce = ({
   }, [triggerAnimation]);
   return (
     <View style={styles.container}>
-        
       <View style={styles.main}>
-
         <Animated.View
           style={[
             styles.hotSauceContainer,
@@ -96,7 +85,7 @@ const styles = StyleSheet.create({
   },
   hotSauceImage: {
     width: 370,
-   
+
     resizeMode: "contain",
     alignSelf: "center",
   },

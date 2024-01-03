@@ -18,7 +18,7 @@ export const AddPlayerButton = ({
       onPress={!disabled ? onPress : null}
       {...props}
     >
-      <Text  style={[styles(size).text, textStyle]}>{title}</Text>
+      <Text style={[styles(size).text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -34,7 +34,6 @@ const styles = (size) => ({
     borderColor: colors.white,
     borderWidth: 4,
     backgroundColor: colors.primary,
-   
   },
-  text: { color: colors.white, fontSize: size / 2 ,},
+  text: { color: colors.white, fontSize: size / 2 },
 });

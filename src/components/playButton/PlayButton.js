@@ -17,7 +17,7 @@ export const PlayButton = ({
       onPress={!disabled ? onPress : null}
       {...props}
     >
-      <Text  style={[styles(size).text, textStyle]}>{title}</Text>
+      <Text style={[styles(size).text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -30,10 +30,16 @@ const styles = (size) => ({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-  
+
     borderColor: colors.white,
     borderWidth: 4,
     backgroundColor: colors.primary,
   },
-  text: { color: colors.white, fontSize: size / 5,alignItems: "center", justifyContent: "center", textAlign: "center", },
+  text: {
+    color: colors.white,
+    fontSize: size / 5,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+  },
 });

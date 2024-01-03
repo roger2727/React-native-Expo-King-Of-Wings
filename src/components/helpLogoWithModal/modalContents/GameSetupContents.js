@@ -8,7 +8,7 @@ export default GameSetupContents = () => {
       <Text style={styles.modalText}>
         Welcome to King of Wings! Here's how to set your game up:
       </Text>
-   
+
       <Text style={styles.modalText}>
         1. select how may rounds you want to play .
       </Text>
