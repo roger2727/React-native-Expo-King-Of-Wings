@@ -1,5 +1,5 @@
 import { React, useState,  useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, StatusBar } from "react-native";
 import { colors } from "../../utils/colors";
 import { HelpLogoWithModal } from "../helpLogoWithModal/HelpLogoWithModal";
 import homeLogo from "../../../assets/home.png";
@@ -69,29 +69,20 @@ const Game = ({ route }) => {
       const newRoundCount = roundCount + 1;
       setRoundCount(newRoundCount);
       console.log(`Round completed. New round count: ${newRoundCount}`);
-  
-      console.log(`Selected Rounds: ${selectedRounds}, New Round Count: ${newRoundCount}`);
+
       // Check if the game should end
       if (newRoundCount >= selectedRounds) {
         console.log('End of the selected rounds. Navigating to Game Over screen.');
-        // Game over logic
-        const sortedScores = [...scores].sort((a, b) => b - a);
-        const uniqueScores = [...new Set(sortedScores)];
-        const topThreeScores = uniqueScores.slice(0, 3);
-  
-        const winners = topThreeScores.map((score) => {
-          return players[scores.indexOf(score)];
-        });
-  
-        navigation.navigate("Game Over", { winners });
+
+        // Pass the entire scores and players array to the Game Over screen
+        navigation.navigate("Game Over", { scores, players });
         return; // Exit the function to prevent further processing
       }
     }
   
     console.log(`Setting next player index for the next turn: ${nextPlayerIndex}`);
-    // Set the next player index for the next turn
     setCurrentPlayerIndex(nextPlayerIndex);
-  };
+};
   
   
   
@@ -104,7 +95,7 @@ const Game = ({ route }) => {
   };
 
 console.log('scores', scores);  
-
+console.log('players', players);
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -164,7 +155,7 @@ console.log('scores', scores);
       )}
 {currentPlayerIndex == null && (
   <View style={styles.gameStartContainer}>
-        <Text style={styles.msg}>New here? Tap the 'Help' button above for a quick guide.</Text>
+        <Text style={styles.msg}>New here? Tap the 'Question' button above for a quick guide.</Text>
     <Text style={styles.playerName}>Get Ready!</Text>
     <Text  style={styles.msg}>A random player will kick off the game.</Text>
 
@@ -181,7 +172,7 @@ console.log('scores', scores);
   
     <PlayButton
       style={styles.button}
-      size={120}
+      size={100}
       title="NEXT PLAYER"
       onPress={handleStartButtonClick}
       disabled={isTimerRunning} 
@@ -195,6 +186,7 @@ console.log('scores', scores);
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 10,
     flex: 1,
     flexGrow: 1,
     flexDirection: "column",
@@ -213,27 +205,29 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nav: {
+   
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    alignSelf: "stretch", // This will make the nav take full width
-    width: "100%",
-    paddingHorizontal: 0, // Set horizontal padding to 0
+    alignSelf: "center", // This will make the nav take full width
+    width: "95%",
 
-    paddingVertical: 5, // Maintain vertical padding
+   // Maintain vertical padding
   },
 
   button: {
     alignSelf: "center",
     justifyContent: "center",
     alignContent: "center",
+
   },
   playerInfoContainer: {
     alignItems: "center",
     alignSelf: "center",
     width: "100%",
-    height: 70,
+    height: 60,
     position: "relative",
+
   },
   playerNameContainer: {
     flex: 1,
@@ -242,7 +236,7 @@ const styles = StyleSheet.create({
   },
   playerName: {
     color: colors.primary,
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
     letterSpacing: 2,
     alignSelf: "center",
@@ -255,7 +249,7 @@ const styles = StyleSheet.create({
   },
   timer: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 16,
   },
   msgContainer: {
     flex: 1,
@@ -275,7 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignSelf: "center",
-    width: "95%",
+    width: "80%",
     
   },
 

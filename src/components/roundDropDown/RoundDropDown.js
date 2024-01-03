@@ -1,35 +1,44 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-
+import React, { useState } from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const RoundDropDown = ({ selectedRounds, onRoundsChange }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Rounds:</Text>
-      <Picker
-        selectedValue={selectedRounds}
-        style={styles.picker}
-        onValueChange={(itemValue, itemIndex) => onRoundsChange(itemValue)}
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Text style={styles.selectedText}>{selectedRounds}</Text>
+      </TouchableOpacity>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
       >
-        <Picker.Item style={styles.singlePicker} label="1" value="1" />
-        <Picker.Item style={styles.singlePicker} label="2" value="2" />
-        <Picker.Item style={styles.singlePicker} label="3" value="3" />
-        <Picker.Item style={styles.singlePicker} label="4" value="4" />
-        <Picker.Item style={styles.singlePicker} label="5" value="5" />
-        <Picker.Item style={styles.singlePicker} label="6" value="6" />
-        <Picker.Item style={styles.singlePicker} label="7" value="7" />
-        <Picker.Item style={styles.singlePicker} label="8" value="8" />
-        <Picker.Item style={styles.singlePicker} label="9" value="9" />
-        <Picker.Item style={styles.singlePicker} label="10" value="10" />
-      </Picker>
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>Select number of rounds</Text>
+          {options.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.option}
+              onPress={() => {
+                onRoundsChange(option);
+                setModalVisible(false);
+              }}
+            >
+              <Text style={styles.optionText}>{option}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 175,
+  width: "100%",
 
     padding: 10,
     backgroundColor: "#FAEBD7",
@@ -38,14 +47,41 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-
     fontWeight: "bold",
   },
-  picker: {
-    zIndex: 20,
-  },
-  singlePicker: {
+  selectedText: {
     fontSize: 18,
+    padding: 8,
+    backgroundColor: "#FAEBD7",
+    borderRadius: 5,
+  },
+  modalView: {
+    margin: 40,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  option: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  optionText: {
+    fontSize: 18,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
 });
 

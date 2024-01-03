@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   hotSauceImage: {
-    width: 400,
+    width: 370,
    
     resizeMode: "contain",
     alignSelf: "center",

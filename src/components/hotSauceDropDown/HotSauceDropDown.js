@@ -1,35 +1,48 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { Modal, TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 
 const HotSauceDropDown = ({ selectedHotSauceNum, onRoundsChange }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const options = Array.from({ length: 10 }, (_, i) => (i + 1).toString()); // Creating options from 1 to 10
+
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Hot Sauces</Text>
-      <Picker
-        selectedValue={selectedHotSauceNum}
-        style={styles.picker}
-        onValueChange={(itemValue, itemIndex) => onRoundsChange(itemValue)}
+      <Text style={styles.label}>Hot Sauces:</Text>
+      <TouchableOpacity 
+        style={styles.dropdown}
+        onPress={() => setModalVisible(true)}
       >
-        <Picker.Item style={styles.singlePicker} label="1" value="1" />
-        <Picker.Item style={styles.singlePicker} label="2" value="2" />
-        <Picker.Item style={styles.singlePicker} label="3" value="3" />
-        <Picker.Item style={styles.singlePicker} label="4" value="4" />
-        <Picker.Item style={styles.singlePicker} label="5" value="5" />
-        <Picker.Item style={styles.singlePicker} label="6" value="6" />
-        <Picker.Item style={styles.singlePicker} label="7" value="7" />
-        <Picker.Item style={styles.singlePicker} label="8" value="8" />
-        <Picker.Item style={styles.singlePicker} label="9" value="9" />
-        <Picker.Item style={styles.singlePicker} label="10" value="10" />
-      </Picker>
+        <Text style={styles.selectedText}>{selectedHotSauceNum}</Text>
+      </TouchableOpacity>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>number of hot sauces</Text>
+          {options.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.option}
+              onPress={() => {
+                onRoundsChange(option);
+                setModalVisible(false);
+              }}
+            >
+              <Text style={styles.optionText}>{option}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 175,
+    width: "100%",
     padding: 10,
     backgroundColor: "#FAEBD7",
     borderRadius: 10,
@@ -38,21 +51,45 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     color: colors.black,
-
     fontWeight: "bold",
   },
-  picker: {
+  dropdown: {
+
+    padding: 8,
+    backgroundColor: "#FAEBD7",
+  },
+  selectedText: {
     fontSize: 18,
 
-    backgroundColor: "#FAEBD7",
-    color: colors.black,
-    zIndex: 20,
-    alignContent: "center",
-    justifyContent: "center",
   },
-  singlePicker: {
+  modalView: {
+margin: 40,
+
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  option: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  optionText: {
     fontSize: 18,
-    color: colors.black,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
 });
 

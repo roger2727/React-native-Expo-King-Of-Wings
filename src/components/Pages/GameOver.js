@@ -1,5 +1,5 @@
 import { React, useRef, useEffect, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text, Animated } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Text, Animated, StatusBar,Platform } from "react-native";
 
 import { colors } from "../../utils/colors";
 
@@ -14,11 +14,18 @@ import { useNavigation } from "@react-navigation/native";
 import Confetti from "react-native-confetti";
 const GameOver = ({ route }) => {
   const navigation = useNavigation();
-  const { winners } = route.params;
-  const firstPlace = winners[0] || "";
-  const secondPlace = winners.length > 1 ? winners[1] : "";
-  const thirdPlace = winners.length > 2 ? winners[2] : "";
-console.log('winners', winners);
+  const { scores, players } = route.params;  
+
+  const playersWithScores = players.map((player, index) => ({ name: player, score: scores[index] }));
+
+  // Sort the array based on scores in descending order
+  playersWithScores.sort((a, b) => b.score - a.score);
+
+  // Extract the top three players
+  const firstPlace = playersWithScores[0]?.name || "";
+  const secondPlace = playersWithScores[1]?.name || "";
+  const thirdPlace = playersWithScores[2]?.name || "";
+
 
   const confettiRef = useRef();
 
@@ -104,6 +111,7 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexGrow: 1,
     flexDirection: "column",
     width: "100%",
@@ -126,6 +134,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nav: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -134,8 +143,8 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   KingImage: {
-    width: 250,
-    height: 250,
+    width: 150,
+    height: 150,
 zIndex: 10,
     resizeMode: "contain",
     alignSelf: "center",
@@ -194,7 +203,7 @@ zIndex: 10,
     flexDirection: "column",
     width: "80%",
     backgroundColor: colors.black,
-    marginTop: -30,
+    marginTop: -20,
     marginBottom:-60, // Adjust this value as needed to move closer to the champ image
   },
   secondThirdContainer: {

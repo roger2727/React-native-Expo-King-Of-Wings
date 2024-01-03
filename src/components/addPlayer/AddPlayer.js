@@ -60,12 +60,12 @@ export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
           onChangeText={setText}
           label="Add a player"
         />
-        <View style={styles.button}>
+        <View >
           <AddPlayerButton   disabled={isAddButtonDisabled} onPress={handleAddPlayer} size={60} title="+" />
         </View>
       </View>
 
-      <ScrollView style={styles.playerList}>
+      <ScrollView  style={styles.playerList}>
       <Text alignSelf="center" style={[styles.playerListHeading, { fontSize: getFontSize(players.length) }]}>
           PLAYERS LIST
         </Text>
@@ -75,6 +75,7 @@ export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
               {index + 1}. {player.toUpperCase()}
             </Text>
             <TouchableOpacity
+            
               source={deletePlayer}
               style={styles.deleteButton}
               onPress={() => handleDeletePlayer(index)}
@@ -90,9 +91,10 @@ export const AddPlayer = ({ players, onAddPlayer, onDeletePlayer }) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 400,
+flex: 1,
+backgroundColor: colors.black,
   },
-  button: {},
+
   TextInput: {
     color: colors.black,
     flex: 1,
@@ -101,29 +103,32 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   inputContainer: {
+    width: "95%",
+    alignSelf: "center",
     flexDirection: "row",
-    padding: 20,
+    paddingBottom: 20,
+    
   },
   playerList: {
     alignSelf: "center",
     padding: 20,
     backgroundColor: "#FAEBD7",
-    width: "90%",
-    height: 310,
-    maxHeight: 310,
-
+    width: "95%",
+  
+   minHeight: 280,
+   maxHeight: 350,
     borderWidth: 4,
     borderRadius: 10,
     borderColor: colors.primary,
   },
   playerContainer: {
-    flex: 1,
+   
 
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 5,
-    width: "90%",
+    width: "95%",
     alignSelf: "center",
   },
   player: {

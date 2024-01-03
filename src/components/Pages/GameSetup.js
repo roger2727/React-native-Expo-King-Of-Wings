@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, StatusBar, Platform ,KeyboardAvoidingView, ScrollView} from "react-native";
 import AddPlayer from "../addPlayer/AddPlayer";
 import { colors } from "../../utils/colors";
 import RoundDropDown from "../roundDropDown/RoundDropDown";
@@ -28,60 +28,74 @@ const GameSetup = () => {
     setPlayers(players.filter((_, index) => index !== indexToDelete));
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.nav}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Welcome")}
-          style={styles.logoImage}
-          source={homeLogo}
-        >
-          <Image style={styles.logoImage} source={homeLogo} />
-        </TouchableOpacity>
-
-        <HelpLogoWithModal modalContent={<GameSetupContents />} />
-      </View>
-      <View style={styles.DropDownsContainer}>
-        <RoundDropDown
-          selectedRounds={selectedRounds}
-          onRoundsChange={setSelectedRounds}
-        />
-        <HotSauceDropDown
-          selectedHotSauceNum={selectedHotSauceNum}
-          onRoundsChange={setSelectedHotSauceNum}
-        />
-      </View>
-      <View style={styles.InputContainer}>
-        <AddPlayer
-          players={players}
-          onAddPlayer={handleAddPlayer}
-          onDeletePlayer={handleDeletePlayer}
-        />
-      </View>
-      <View style={styles.PlayButtonContainer}>
-        <PlayButton
-          onPress={() =>
-            navigation.navigate("Game", {
-              selectedHotSauceNum,
-              players,
-              selectedRounds,
-            })
-          }
-          width={100}
-          height={50}
-          title="PLAY"
-          disabled={players.length === 0} // Disable the button if no players
-        />
-      </View>
+    <KeyboardAvoidingView 
+      style={{ flex: 1, backgroundColor: colors.black }} 
+    
+   
+    >
+      <ScrollView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.nav}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Welcome")}
+              style={styles.logoImage}
+            >
+              <Image style={styles.logoImage} source={homeLogo} />
+            </TouchableOpacity>
+  
+            <HelpLogoWithModal modalContent={<GameSetupContents />} />
+          </View>
+          <View style={styles.DropDownsContainer}>
+    <View style={styles.dropDownStyle}>
+      <RoundDropDown
+        selectedRounds={selectedRounds}
+        onRoundsChange={setSelectedRounds}
+      />
     </View>
+    <View style={styles.dropDownStyle}>
+      <HotSauceDropDown
+        selectedHotSauceNum={selectedHotSauceNum}
+        onRoundsChange={setSelectedHotSauceNum}
+      />
+    </View>
+  </View>
+          <View style={styles.InputContainer}>
+            <AddPlayer
+              players={players}
+              onAddPlayer={handleAddPlayer}
+              onDeletePlayer={handleDeletePlayer}
+            />
+          </View>
+          <View style={styles.PlayButtonContainer}>
+            <PlayButton
+              style={styles.button}
+              onPress={() =>
+                navigation.navigate("Game", {
+                  selectedHotSauceNum,
+                  players,
+                  selectedRounds,
+                })
+              }
+            size={100}
+              title="PLAY"
+              disabled={players.length === 0} // Disable the button if no players
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
+  
 };
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 15,
     flex: 1,
     flexGrow: 1,
     flexDirection: "column",
     gap: 20,
+
 
     alignContent: "center",
     justifyContent: "center",
@@ -93,11 +107,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   InputContainer: {
-    height: 400,
+    flex: 1,
+
+    backgroundColor: "#FAEBD7",
+
+
+    borderColor: colors.primary,
+  
   },
   DropDownsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignItems: "center",
+    alignSelf: "center",
+    width: "100%",
+    paddingHorizontal: 10, // add padding if needed
+  },
+  dropDownStyle: {
+    width: "50%", // Set width of each dropdown to 50%
+    paddingHorizontal: 5, // Adjust padding for spacing
   },
   logoImage: {
     width: 45,
@@ -106,6 +134,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nav: {
+ 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -113,6 +142,7 @@ const styles = StyleSheet.create({
 
     width: "95%",
   },
+  
 });
 
 export default GameSetup;

@@ -37,7 +37,7 @@ const Quiz = ({
     // Reset states when the question changes
     setSelectedAnswer(null);
     setIsAnswered(false);
-    setTimer(20); // Reset timer for the new question
+    setTimer(20000); // Reset timer for the new question
   }, [currentQuestionIndex]); // Dependency array includes currentQuestionIndex
 
   const handleOptionPress = (option) => {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
+    gap: 10,
   },
   quizContainer: {
     width: "100%",
@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
   question: {
     color: colors.white,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 18,
     textAlign: "center",
   },
   optionsGrid: {
   
-   
+ 
     width: "100%",
   },
   option: {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 
   timer: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 18,
 
     borderColor: colors.primary,
   },
